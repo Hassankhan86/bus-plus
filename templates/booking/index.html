@@ -1,0 +1,841 @@
+{% extends 'booking/base/base.html' %}
+{% load static %}
+{% block title %}Buses Plus{% endblock title %}Buses Plus
+
+{% block body %}
+
+
+
+<section class="hero-wrapper hero-wrapper8">
+    <div class="hero-box bread-bg-7 after-none">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="hero-content">
+              <div class="section-heading">
+                <h2
+                  class="sec__title cd-headline slide bg-white-mask d-inline-block text-black py-2 px-3 rounded font-size-30"
+                >
+                  <span class="cd-words-wrapper py-0">
+                    <b class="is-visible">Low cost</b>
+                    <b>Comfortable</b>
+                    <b>Safe</b>
+                  </span>
+                     bus hire from just $320 AUD
+                </h2>
+              </div>
+            </div>
+            <!-- end hero-content -->
+          </div>
+          <!-- end col-lg-12 -->
+        </div>
+        <!-- end row -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="search-fields-container mt-4 shadow-sm">
+              <div class="section-tab section-tab-2 pb-2">
+                <ul class="nav nav-tabs" id="myTab3" role="tablist">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      id="one-way-tab"
+                      data-toggle="tab"
+                      href="#one-way"
+                      role="tab"
+                      aria-controls="one-way"
+                      aria-selected="true"
+                    >
+                      One way
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      id="round-trip-tab"
+                      data-toggle="tab"
+                      href="#round-trip"
+                      role="tab"
+                      aria-controls="round-trip"
+                      aria-selected="false"
+                    >
+                      Charter
+                    </a>
+                  </li>
+                    <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      id="self-trip-tab"
+                      data-toggle="tab"
+                      href="#self-trip"
+                      role="tab"
+                      aria-controls="self-trip"
+                      aria-selected="false"
+                    >
+                      Self Drive
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              
+              <div class="tab-content" id="myTabContent3">
+                <div
+                  class="tab-pane show active"
+                  id="one-way"
+                  role="tabpanel"
+                  aria-labelledby="one-way-tab"
+                >
+                  <div class="contact-form-action search-input-group-wrap">
+                    <form action="/booking" class="row align-items-center details_form" id="details_form" method="post">
+                      {% csrf_token %}
+                      <div class="col-lg-5 pr-0">
+                        <div
+                          class="d-flex align-items-center search-input-group"
+                        >
+                          <div
+                            class="input-box flex-grow-1 prepend-input-box"
+                          >
+                            <label class="label-text">From</label>
+                            <div class="form-group">
+                              <span class="la la-map-marker form-icon"></span>
+                              <input
+                                class="form-control  pickup"
+                                type="text"
+                                name = "pickup"
+                                required
+                                id = "pickup"
+                                placeholder="Melbourne"
+                              />
+                              <button class="icon-switch" type="button">
+                                <img
+                                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuOTk3MjMgOC43MjY0MkgyMC43MjY4TDE4LjI4MzYgMTEuMTZDMTguMTUzMiAxMS4yOTI1IDE4LjA4MDEgMTEuNDcwOSAxOC4wODAxIDExLjY1NjhDMTguMDgwMSAxMS44NDI3IDE4LjE1MzIgMTIuMDIxMiAxOC4yODM2IDEyLjE1MzZDMTguNDE3NSAxMi4yODUyIDE4LjU5NzUgMTIuMzU5MiAxOC43ODUyIDEyLjM2VjEyLjM2QzE4Ljk3MDEgMTIuMzU5IDE5LjE0NyAxMi4yODQ4IDE5LjI3NzIgMTIuMTUzNkwyMi41NDg0IDguODgwMDJDMjIuNzg2MSA4LjY0MDggMjIuOTE5NiA4LjMxNzI2IDIyLjkxOTYgNy45ODAwMkMyMi45MTk2IDcuNjQyNzcgMjIuNzg2MSA3LjMxOTIzIDIyLjU0ODQgNy4wODAwMkwxOS4yNzcyIDMuODA2NDJDMTkuMjE0MyAzLjczOTQzIDE5LjEzOCAzLjY4NjQzIDE5LjA1MzIgMy42NTA4N0MxOC45Njg0IDMuNjE1MzEgMTguODc3MSAzLjU5Nzk4IDE4Ljc4NTIgMy42MDAwMlYzLjYwMDAyQzE4LjY5MTkgMy41OTc5NyAxOC41OTkyIDMuNjE1MjUgMTguNTEyOSAzLjY1MDc3QzE4LjQyNjUgMy42ODYyOSAxOC4zNDg1IDMuNzM5MjggMTguMjgzNiAzLjgwNjQyQzE4LjE1MzIgMy45Mzg4NyAxOC4wODAxIDQuMTE3MzEgMTguMDgwMSA0LjMwMzIyQzE4LjA4MDEgNC40ODkxMiAxOC4xNTMyIDQuNjY3NTYgMTguMjgzNiA0LjgwMDAyTDIwLjcyNjggNy4zNDE2MkgxLjk5NzIzQzEuODEwNzEgNy4zNDQxNCAxLjYzMjcyIDcuNDIwMTggMS41MDE5NSA3LjU1MzJDMS4zNzExOCA3LjY4NjIyIDEuMjk4MTggNy44NjU0OCAxLjI5ODgzIDguMDUyMDJDMS4zMDczOCA4LjIzMjI2IDEuMzg0NDMgOC40MDI0MyAxLjUxNDIzIDguNTI3NzhDMS42NDQwNCA4LjY1MzEyIDEuODE2OCA4LjcyNDE3IDEuOTk3MjMgOC43MjY0MlY4LjcyNjQyWk0yMi4xNzg4IDE1LjI3MzZIMy40NTg4M0w1Ljg5MjQzIDEyLjgxODRDNi4wMjI4OCAxMi42ODYgNi4wOTYgMTIuNTA3NSA2LjA5NiAxMi4zMjE2QzYuMDk2IDEyLjEzNTcgNi4wMjI4OCAxMS45NTczIDUuODkyNDMgMTEuODI0OEM1Ljc3NjAyIDExLjcwNjIgNS42MjExNSAxMS42MzMxIDUuNDU1NjMgMTEuNjE4NFYxMS42MTg0QzUuMjY3OTIgMTEuNjE5MiA1LjA4NzkzIDExLjY5MzMgNC45NTQwMyAxMS44MjQ4TDEuNjgwNDMgMTUuMDk4NEMxLjQ0MjcxIDE1LjMzNzYgMS4zMDkyOSAxNS42NjEyIDEuMzA5MjkgMTUuOTk4NEMxLjMwOTI5IDE2LjMzNTcgMS40NDI3MSAxNi42NTkyIDEuNjgwNDMgMTYuODk4NEw0Ljk1NDAzIDIwLjE3MkM1LjA5ODg0IDIwLjI3NjcgNS4yNzkxNSAyMC4zMTk4IDUuNDU1NjMgMjAuMjkyVjIwLjI5MkM1LjU0NjE5IDIwLjI5MzEgNS42MzYwNyAyMC4yNzYzIDUuNzIwMSAyMC4yNDI1QzUuODA0MTMgMjAuMjA4OCA1Ljg4MDY0IDIwLjE1ODcgNS45NDUyMyAyMC4wOTUyQzYuMDc1NzIgMTkuOTYwOCA2LjE0ODcxIDE5Ljc4MDkgNi4xNDg3MSAxOS41OTM2QzYuMTQ4NzEgMTkuNDA2MyA2LjA3NTcyIDE5LjIyNjQgNS45NDUyMyAxOS4wOTJMMy40NTg4MyAxNi42NTg0SDIyLjE3ODhDMjIuMjcyIDE2LjY1ODQgMjIuMzY0MyAxNi42NCAyMi40NTAzIDE2LjYwNDNDMjIuNTM2NCAxNi41Njg2IDIyLjYxNDUgMTYuNTE2MiAyMi42ODAzIDE2LjQ1MDJDMjIuNzQ2MSAxNi4zODQyIDIyLjc5ODIgMTYuMzA1OSAyMi44MzM2IDE2LjIxOTdDMjIuODY5MSAxNi4xMzM1IDIyLjg4NzEgMTYuMDQxMiAyMi44ODY4IDE1Ljk0OEMyMi44ODM3IDE1Ljc2MjMgMjIuODA3NyAxNS41ODUzIDIyLjY3NTMgMTUuNDU1MUMyMi41NDI4IDE1LjMyNDkgMjIuMzY0NSAxNS4yNTIgMjIuMTc4OCAxNS4yNTJWMTUuMjczNloiIGZpbGw9IiM4QjhCOEIiLz4KPC9zdmc+Cg=="
+                                  alt=""
+                                />
+                              </button>
+                            </div>
+                          </div>
+                          <div class="input-box flex-grow-1 append-input-box">
+                            <label class="label-text">To</label>
+                            <div class="form-group">
+                              <span class="la la-map-marker form-icon"></span>
+                              <input
+                              class="form-control destination"
+                              type="text"
+                              required
+                              name = "destination"
+                              id = "destination"
+                              placeholder="Perth"
+                            />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end col-lg-5 -->
+                      <div class="col-lg-3 pr-0">
+                        <div class="input-box">
+                          <label class="label-text">Departure</label>
+                          <div class="form-group">
+                            <span class="la la-calendar form-icon"></span>
+                            <input
+                              class="date-range form-control daterange-single"
+                              type="text"
+                              required
+                              name="pickup_date"
+                              id="pickup_date"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                      </div>
+                        {% if IS_BUSES_SHOW_TO_USER %}
+                      <div class="col-lg-2 pr-0">
+                        <div class="input-box">
+                          <label class="label-text">Passengers/Luggage</label>
+                          <div class="form-group">
+                            <div
+                              class="dropdown dropdown-contain gty-container"
+                            >
+                              <a
+                                class="dropdown-toggle dropdown-btn"
+                                href="#"
+                                role="button"
+                                data-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <span
+                                  class="adult"
+                                  data-text="Adult"
+                                  data-text-multi="Adults"
+                                  >0 Adult</span
+                                >
+                                -
+                                <span
+                                  class="children"
+                                  data-text="Child"
+                                  data-text-multi="Children"
+                                  >0 Children</span
+                                >
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-wrap">
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Adults
+                                      <span>from 15 years</span></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="adult_number"
+                                        value="0"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Children
+                                      <span>0 to 14 years</span></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="child_number"
+                                        value="0"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Luggage
+                                      <span
+                                        >Luggage in Kg</span
+                                      ></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="bikes_number"
+                                        value="0"
+                                        class="qty-input"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- end dropdown -->
+                          </div>
+                        </div>
+                      </div>
+                      {% endif %}
+                        <!-- end col-lg-2 -->
+                      <div class="col-lg-2">
+                        <button
+                          type="submit"
+                          class="theme-btn w-100 text-center margin-top-20px"
+                          >Search</button
+                        >
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <div
+                  class="tab-pane"
+                  id="round-trip"
+                  role="tabpanel"
+                  aria-labelledby="round-trip-tab"
+                >
+                  <div class="contact-form-action search-input-group-wrap">
+                    <form action="/booking" class="row align-items-center details_form" id="details_form" method="post">
+                      {% csrf_token %}
+                      <div class="col-lg-5 pr-0">
+                        <div
+                          class="d-flex align-items-center search-input-group"
+                        >
+                          <div
+                            class="input-box flex-grow-1 prepend-input-box"
+                          >
+                            <label class="label-text">From</label>
+                            <div class="form-group">
+                              <span class="la la-map-marker form-icon"></span>
+                              <input
+                                class="form-control prepend-input address-1 pickup"
+                                type="text"
+                                required
+                                name = "pickup"
+                                id = "pickup"
+                                placeholder="Melbourne"
+                              />
+                              <button class="icon-switch" type="button">
+                                <img
+                                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuOTk3MjMgOC43MjY0MkgyMC43MjY4TDE4LjI4MzYgMTEuMTZDMTguMTUzMiAxMS4yOTI1IDE4LjA4MDEgMTEuNDcwOSAxOC4wODAxIDExLjY1NjhDMTguMDgwMSAxMS44NDI3IDE4LjE1MzIgMTIuMDIxMiAxOC4yODM2IDEyLjE1MzZDMTguNDE3NSAxMi4yODUyIDE4LjU5NzUgMTIuMzU5MiAxOC43ODUyIDEyLjM2VjEyLjM2QzE4Ljk3MDEgMTIuMzU5IDE5LjE0NyAxMi4yODQ4IDE5LjI3NzIgMTIuMTUzNkwyMi41NDg0IDguODgwMDJDMjIuNzg2MSA4LjY0MDggMjIuOTE5NiA4LjMxNzI2IDIyLjkxOTYgNy45ODAwMkMyMi45MTk2IDcuNjQyNzcgMjIuNzg2MSA3LjMxOTIzIDIyLjU0ODQgNy4wODAwMkwxOS4yNzcyIDMuODA2NDJDMTkuMjE0MyAzLjczOTQzIDE5LjEzOCAzLjY4NjQzIDE5LjA1MzIgMy42NTA4N0MxOC45Njg0IDMuNjE1MzEgMTguODc3MSAzLjU5Nzk4IDE4Ljc4NTIgMy42MDAwMlYzLjYwMDAyQzE4LjY5MTkgMy41OTc5NyAxOC41OTkyIDMuNjE1MjUgMTguNTEyOSAzLjY1MDc3QzE4LjQyNjUgMy42ODYyOSAxOC4zNDg1IDMuNzM5MjggMTguMjgzNiAzLjgwNjQyQzE4LjE1MzIgMy45Mzg4NyAxOC4wODAxIDQuMTE3MzEgMTguMDgwMSA0LjMwMzIyQzE4LjA4MDEgNC40ODkxMiAxOC4xNTMyIDQuNjY3NTYgMTguMjgzNiA0LjgwMDAyTDIwLjcyNjggNy4zNDE2MkgxLjk5NzIzQzEuODEwNzEgNy4zNDQxNCAxLjYzMjcyIDcuNDIwMTggMS41MDE5NSA3LjU1MzJDMS4zNzExOCA3LjY4NjIyIDEuMjk4MTggNy44NjU0OCAxLjI5ODgzIDguMDUyMDJDMS4zMDczOCA4LjIzMjI2IDEuMzg0NDMgOC40MDI0MyAxLjUxNDIzIDguNTI3NzhDMS42NDQwNCA4LjY1MzEyIDEuODE2OCA4LjcyNDE3IDEuOTk3MjMgOC43MjY0MlY4LjcyNjQyWk0yMi4xNzg4IDE1LjI3MzZIMy40NTg4M0w1Ljg5MjQzIDEyLjgxODRDNi4wMjI4OCAxMi42ODYgNi4wOTYgMTIuNTA3NSA2LjA5NiAxMi4zMjE2QzYuMDk2IDEyLjEzNTcgNi4wMjI4OCAxMS45NTczIDUuODkyNDMgMTEuODI0OEM1Ljc3NjAyIDExLjcwNjIgNS42MjExNSAxMS42MzMxIDUuNDU1NjMgMTEuNjE4NFYxMS42MTg0QzUuMjY3OTIgMTEuNjE5MiA1LjA4NzkzIDExLjY5MzMgNC45NTQwMyAxMS44MjQ4TDEuNjgwNDMgMTUuMDk4NEMxLjQ0MjcxIDE1LjMzNzYgMS4zMDkyOSAxNS42NjEyIDEuMzA5MjkgMTUuOTk4NEMxLjMwOTI5IDE2LjMzNTcgMS40NDI3MSAxNi42NTkyIDEuNjgwNDMgMTYuODk4NEw0Ljk1NDAzIDIwLjE3MkM1LjA5ODg0IDIwLjI3NjcgNS4yNzkxNSAyMC4zMTk4IDUuNDU1NjMgMjAuMjkyVjIwLjI5MkM1LjU0NjE5IDIwLjI5MzEgNS42MzYwNyAyMC4yNzYzIDUuNzIwMSAyMC4yNDI1QzUuODA0MTMgMjAuMjA4OCA1Ljg4MDY0IDIwLjE1ODcgNS45NDUyMyAyMC4wOTUyQzYuMDc1NzIgMTkuOTYwOCA2LjE0ODcxIDE5Ljc4MDkgNi4xNDg3MSAxOS41OTM2QzYuMTQ4NzEgMTkuNDA2MyA2LjA3NTcyIDE5LjIyNjQgNS45NDUyMyAxOS4wOTJMMy40NTg4MyAxNi42NTg0SDIyLjE3ODhDMjIuMjcyIDE2LjY1ODQgMjIuMzY0MyAxNi42NCAyMi40NTAzIDE2LjYwNDNDMjIuNTM2NCAxNi41Njg2IDIyLjYxNDUgMTYuNTE2MiAyMi42ODAzIDE2LjQ1MDJDMjIuNzQ2MSAxNi4zODQyIDIyLjc5ODIgMTYuMzA1OSAyMi44MzM2IDE2LjIxOTdDMjIuODY5MSAxNi4xMzM1IDIyLjg4NzEgMTYuMDQxMiAyMi44ODY4IDE1Ljk0OEMyMi44ODM3IDE1Ljc2MjMgMjIuODA3NyAxNS41ODUzIDIyLjY3NTMgMTUuNDU1MUMyMi41NDI4IDE1LjMyNDkgMjIuMzY0NSAxNS4yNTIgMjIuMTc4OCAxNS4yNTJWMTUuMjczNloiIGZpbGw9IiM4QjhCOEIiLz4KPC9zdmc+Cg=="
+                                  alt=""
+                                />
+                              </button>
+                            </div>
+                          </div>
+                          <div class="input-box flex-grow-1 append-input-box">
+                            <label class="label-text">To</label>
+                            <div class="form-group">
+                              <span class="la la-map-marker form-icon"></span>
+                              <input
+                                class="form-control destination"
+                                type="text"
+                                required
+                                name = "destination"
+                                id = "destination"
+                                placeholder="Perth"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <input type="hidden" name="pickup_lat" />
+                      <input type="hidden" name="pickup_long" />
+                      <input type="hidden" name="destination_lat" />
+                      <input type="hidden" name="destination_long" />
+                      <input type="hidden" name="trip_type" value="2" />
+                      <!-- end col-lg-5 -->
+                      <div class="col-lg-3 pr-0">
+                        <div
+                          class="d-flex align-items-center search-input-group"
+                        >
+                          <div class="input-box flex-grow-1">
+                            <label class="label-text">Departure</label>
+                            <div class="form-group">
+                              <span class="la la-calendar form-icon"></span>
+                              <input
+                              required
+                                class="date-range form-control prepend-input daterange-single"
+                                type="text"
+                                name="pickup_date"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                          <div class="input-box flex-grow-1">
+                            <label class="label-text">Return</label>
+                            <div class="form-group">
+                              <span class="la la-calendar form-icon"></span>
+                              <input
+                                class="date-range form-control append-input daterange-single"
+                                type="text"
+                                required
+                                name="return_date"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end col-lg-3 -->
+                        {% if IS_BUSES_SHOW_TO_USER %}
+                      <div class="col-lg-2 pr-0">
+                        <div class="input-box">
+                          <label class="label-text">Passengers/Bikes</label>
+                          <div class="form-group">
+                            <div
+                              class="dropdown dropdown-contain gty-container"
+                            >
+                              <a
+                                class="dropdown-toggle dropdown-btn"
+                                href="#"
+                                role="button"
+                                data-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <span
+                                  class="adult"
+                                  data-text="Adult"
+                                  data-text-multi="Adults"
+                                  >0 Adult</span
+                                >
+                                -
+                                <span
+                                  class="children"
+                                  data-text="Child"
+                                  data-text-multi="Children"
+                                  >0 Children</span
+                                >
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-wrap">
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Adults
+                                      <span>from 15 years</span></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="adult_number"
+                                        value="0"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Children
+                                      <span>0 to 14 years</span></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="child_number"
+                                        value="0"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Bikes
+                                      <span
+                                        >E-bikes are not allowed on
+                                        buses.</span
+                                      ></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="bikes_number"
+                                        value="0"
+                                        class="qty-input"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- end dropdown -->
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end col-lg-2 -->
+                        {% endif %}
+                      <div class="col-lg-2">
+                        <button
+                          type="submit"
+                          class="theme-btn w-100 text-center margin-top-20px"
+                          >Search</button
+                        >
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                 <div
+                  class="tab-pane"
+                  id="self-trip"
+                  role="tabpanel"
+                  aria-labelledby="self-trip-tab"
+                >
+                  <div class="contact-form-action search-input-group-wrap">
+                    <form action="/booking" class="row align-items-center details_form" id="details_form" method="post">
+                      {% csrf_token %}
+                      <div class="col-lg-5 pr-0">
+                        <div
+                          class="d-flex align-items-center search-input-group"
+                        >
+                          <div
+                            class="input-box flex-grow-1 prepend-input-box"
+                          >
+                            <label class="label-text">Pickup From</label>
+                            <div class="form-group">
+                              <span class="la la-map-marker form-icon"></span>
+                              <input
+                                class="form-control prepend-input address-1 pickup_"
+                                type="text"
+                                required
+                                value="{{ self_drive_address }}"
+                                name = "pickup"
+                                disabled
+                                id = "pickup"
+                                placeholder="Melbourne"
+                              />
+                              <button class="icon-switch" type="button">
+                                <img
+                                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuOTk3MjMgOC43MjY0MkgyMC43MjY4TDE4LjI4MzYgMTEuMTZDMTguMTUzMiAxMS4yOTI1IDE4LjA4MDEgMTEuNDcwOSAxOC4wODAxIDExLjY1NjhDMTguMDgwMSAxMS44NDI3IDE4LjE1MzIgMTIuMDIxMiAxOC4yODM2IDEyLjE1MzZDMTguNDE3NSAxMi4yODUyIDE4LjU5NzUgMTIuMzU5MiAxOC43ODUyIDEyLjM2VjEyLjM2QzE4Ljk3MDEgMTIuMzU5IDE5LjE0NyAxMi4yODQ4IDE5LjI3NzIgMTIuMTUzNkwyMi41NDg0IDguODgwMDJDMjIuNzg2MSA4LjY0MDggMjIuOTE5NiA4LjMxNzI2IDIyLjkxOTYgNy45ODAwMkMyMi45MTk2IDcuNjQyNzcgMjIuNzg2MSA3LjMxOTIzIDIyLjU0ODQgNy4wODAwMkwxOS4yNzcyIDMuODA2NDJDMTkuMjE0MyAzLjczOTQzIDE5LjEzOCAzLjY4NjQzIDE5LjA1MzIgMy42NTA4N0MxOC45Njg0IDMuNjE1MzEgMTguODc3MSAzLjU5Nzk4IDE4Ljc4NTIgMy42MDAwMlYzLjYwMDAyQzE4LjY5MTkgMy41OTc5NyAxOC41OTkyIDMuNjE1MjUgMTguNTEyOSAzLjY1MDc3QzE4LjQyNjUgMy42ODYyOSAxOC4zNDg1IDMuNzM5MjggMTguMjgzNiAzLjgwNjQyQzE4LjE1MzIgMy45Mzg4NyAxOC4wODAxIDQuMTE3MzEgMTguMDgwMSA0LjMwMzIyQzE4LjA4MDEgNC40ODkxMiAxOC4xNTMyIDQuNjY3NTYgMTguMjgzNiA0LjgwMDAyTDIwLjcyNjggNy4zNDE2MkgxLjk5NzIzQzEuODEwNzEgNy4zNDQxNCAxLjYzMjcyIDcuNDIwMTggMS41MDE5NSA3LjU1MzJDMS4zNzExOCA3LjY4NjIyIDEuMjk4MTggNy44NjU0OCAxLjI5ODgzIDguMDUyMDJDMS4zMDczOCA4LjIzMjI2IDEuMzg0NDMgOC40MDI0MyAxLjUxNDIzIDguNTI3NzhDMS42NDQwNCA4LjY1MzEyIDEuODE2OCA4LjcyNDE3IDEuOTk3MjMgOC43MjY0MlY4LjcyNjQyWk0yMi4xNzg4IDE1LjI3MzZIMy40NTg4M0w1Ljg5MjQzIDEyLjgxODRDNi4wMjI4OCAxMi42ODYgNi4wOTYgMTIuNTA3NSA2LjA5NiAxMi4zMjE2QzYuMDk2IDEyLjEzNTcgNi4wMjI4OCAxMS45NTczIDUuODkyNDMgMTEuODI0OEM1Ljc3NjAyIDExLjcwNjIgNS42MjExNSAxMS42MzMxIDUuNDU1NjMgMTEuNjE4NFYxMS42MTg0QzUuMjY3OTIgMTEuNjE5MiA1LjA4NzkzIDExLjY5MzMgNC45NTQwMyAxMS44MjQ4TDEuNjgwNDMgMTUuMDk4NEMxLjQ0MjcxIDE1LjMzNzYgMS4zMDkyOSAxNS42NjEyIDEuMzA5MjkgMTUuOTk4NEMxLjMwOTI5IDE2LjMzNTcgMS40NDI3MSAxNi42NTkyIDEuNjgwNDMgMTYuODk4NEw0Ljk1NDAzIDIwLjE3MkM1LjA5ODg0IDIwLjI3NjcgNS4yNzkxNSAyMC4zMTk4IDUuNDU1NjMgMjAuMjkyVjIwLjI5MkM1LjU0NjE5IDIwLjI5MzEgNS42MzYwNyAyMC4yNzYzIDUuNzIwMSAyMC4yNDI1QzUuODA0MTMgMjAuMjA4OCA1Ljg4MDY0IDIwLjE1ODcgNS45NDUyMyAyMC4wOTUyQzYuMDc1NzIgMTkuOTYwOCA2LjE0ODcxIDE5Ljc4MDkgNi4xNDg3MSAxOS41OTM2QzYuMTQ4NzEgMTkuNDA2MyA2LjA3NTcyIDE5LjIyNjQgNS45NDUyMyAxOS4wOTJMMy40NTg4MyAxNi42NTg0SDIyLjE3ODhDMjIuMjcyIDE2LjY1ODQgMjIuMzY0MyAxNi42NCAyMi40NTAzIDE2LjYwNDNDMjIuNTM2NCAxNi41Njg2IDIyLjYxNDUgMTYuNTE2MiAyMi42ODAzIDE2LjQ1MDJDMjIuNzQ2MSAxNi4zODQyIDIyLjc5ODIgMTYuMzA1OSAyMi44MzM2IDE2LjIxOTdDMjIuODY5MSAxNi4xMzM1IDIyLjg4NzEgMTYuMDQxMiAyMi44ODY4IDE1Ljk0OEMyMi44ODM3IDE1Ljc2MjMgMjIuODA3NyAxNS41ODUzIDIyLjY3NTMgMTUuNDU1MUMyMi41NDI4IDE1LjMyNDkgMjIuMzY0NSAxNS4yNTIgMjIuMTc4OCAxNS4yNTJWMTUuMjczNloiIGZpbGw9IiM4QjhCOEIiLz4KPC9zdmc+Cg=="
+                                  alt=""
+                                />
+                              </button>
+                            </div>
+                          </div>
+                          <div class="input-box flex-grow-1 append-input-box">
+                            <label class="label-text">Return to</label>
+                            <div class="form-group">
+                              <span class="la la-map-marker form-icon"></span>
+                              <input
+                                class="form-control destination"
+                                type="text"
+                                required
+                                name = "destination"
+                                id = "destination"
+                                 value="{{ self_drive_address }}"
+                                disabled
+                                placeholder="Perth"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <input type="hidden" name="pickup_lat" />
+                      <input type="hidden" name="pickup_long" />
+                      <input type="hidden" name="destination_lat" />
+                      <input type="hidden" name="destination_long" />
+                      <input type="hidden" name="trip_type" value="3" />
+                      <!-- end col-lg-5 -->
+                      <div class="col-lg-3 pr-0">
+                        <div
+                          class="d-flex align-items-center search-input-group"
+                        >
+                          <div class="input-box flex-grow-1">
+                            <label class="label-text">Departure</label>
+                            <div class="form-group">
+                              <span class="la la-calendar form-icon"></span>
+                              <input
+                              required
+                                class="date-range form-control prepend-input daterange-single"
+                                type="text"
+                                name="pickup_date"
+                                readonly
+                              />
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <!-- end col-lg-3 -->
+                        {% if IS_BUSES_SHOW_TO_USER %}
+                      <div class="col-lg-2 pr-0">
+                        <div class="input-box">
+                          <label class="label-text">Passengers/Bikes</label>
+                          <div class="form-group">
+                            <div
+                              class="dropdown dropdown-contain gty-container"
+                            >
+                              <a
+                                class="dropdown-toggle dropdown-btn"
+                                href="#"
+                                role="button"
+                                data-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <span
+                                  class="adult"
+                                  data-text="Adult"
+                                  data-text-multi="Adults"
+                                  >0 Adult</span
+                                >
+                                -
+                                <span
+                                  class="children"
+                                  data-text="Child"
+                                  data-text-multi="Children"
+                                  >0 Children</span
+                                >
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-wrap">
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Adults
+                                      <span>from 15 years</span></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="adult_number"
+                                        value="0"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Children
+                                      <span>0 to 14 years</span></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="child_number"
+                                        value="0"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="dropdown-item">
+                                  <div
+                                    class="qty-box d-flex align-items-center justify-content-between"
+                                  >
+                                    <label
+                                      >Bikes
+                                      <span
+                                        >E-bikes are not allowed on
+                                        buses.</span
+                                      ></label
+                                    >
+                                    <div
+                                      class="qtyBtn d-flex align-items-center"
+                                    >
+                                      <div class="qtyDec">
+                                        <i class="la la-minus"></i>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        name="bikes_number"
+                                        value="0"
+                                        class="qty-input"
+                                      />
+                                      <div class="qtyInc">
+                                        <i class="la la-plus"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- end dropdown -->
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end col-lg-2 -->
+                        {% endif %}
+                      <div class="col-lg-2">
+                        <button
+                          type="submit"
+                          class="theme-btn w-100 text-center margin-top-20px"
+                          >Search</button
+                        >
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- end main-search-input -->
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </div>
+  </section>
+  <!-- end hero-wrapper -->
+  <!-- ================================
+  END HERO-WRAPPER AREA
+================================= -->
+
+  <!-- ================================
+  START INFO AREA
+================================= -->
+  <section
+    class="info-area info-bg padding-top-83px padding-bottom-5px text-center bg-gray"
+  >
+    <div class="container-fluid" style="padding: 7% 0% 0% 0% !important;">
+      <div id="map"></div>
+      <!-- end row -->
+    </div>
+    <!-- end container -->
+  </section>
+ 
+  <section class="low-fare-area padding-top-60px padding-bottom-10px">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <a href="{% url 'index' %}" class="discount-box d-block hover-y">
+            <div class="discount-img">
+              <img src="{% static 'images/scooter.jpg' %}" alt="scooter image" />
+            </div>
+            <!-- end discount-img -->
+            <div class="discount-content">
+              <div class="section-heading">
+                <h2 class="sec__title mb-2 text-white font-size-30">
+                  Discover all destinations
+                </h2>
+                <p class="sec__desc text-white">
+                  Choose from All over Australia, Amazing places travel destinations.
+                </p>
+              </div>
+              <!-- end section-heading -->
+              <div class="btn-box pt-4">
+                <span class="theme-btn border-0"
+                  >Explore the map <i class="la la-arrow-right ml-1"></i
+                ></span>
+              </div>
+            </div>
+            <!-- end discount-content -->
+          </a>
+        </div>
+        <!-- end col-lg-12 -->
+      </div>
+      <!-- end row -->
+    </div>
+  </section>
+  <!-- ================================
+  END LOW FARE AREA
+================================= -->
+
+  <!-- ================================
+  START DESTINATION AREA
+================================= -->
+{#  <section class="destination-area padding-top-100px padding-bottom-80px">#}
+{#    <div class="container">#}
+{#      <div class="row">#}
+{#        <div class="col-lg-12">#}
+{#          <div class="section-heading text-center">#}
+{#            <h2 class="sec__title font-size-30">Featured Trip Deals</h2>#}
+{#          </div>#}
+{#          <!-- end section-heading -->#}
+{#        </div>#}
+{#        <!-- end col-lg-12 -->#}
+{#      </div>#}
+{#      <!-- end row -->#}
+{#      <div class="row padding-top-60px">#}
+{#        {% for ftrip in featuredTrips %}#}
+{#            <div class="col-lg-4 responsive-column">#}
+{#                <div class="card-item flight-card">#}
+{#                    <div class="card-img">#}
+{#                        <a href="" class="d-block">#}
+{#                            <img src="/media/{{ ftrip.bus.bus_logo }}" alt="destination-img" />#}
+{#                            <span class="badge">{{ ftrip.rating }} <i class="fas fa-star" style="color:yellow"></i></span>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                      <span class="logo-title"> Buses Plus</span>#}
+{#                        <h3 class="card-title">#}
+{#                            {{ ftrip.bus.bus.company_name }}#}
+{#                        </h3>#}
+{#                        <p class="card-meta">{{ ftrip.trip_location.destination_city  }}</p>#}
+{#                        <div class="card-price d-flex align-items-center justify-content-between">#}
+{#                            <p>#}
+{#                                <span class="price__from">From</span>#}
+{#                                <span class="price__num">${{ ftrip.price}}</span>#}
+{#                            </p>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <!-- end card-item -->#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#    #}
+{#      <!-- end row -->#}
+{#    </div>#}
+{#    <!-- end container -->#}
+{#  </section>#}
+  <!-- end destination-area -->
+  <!-- ================================
+  END DESTINATION AREA
+================================= -->
+
+  <div class="section-block"></div>
+
+  <!-- ================================
+     START TESTIMONIAL AREA
+================================= -->
+ 
+
+{% endblock body %}
+
+
+{% block script %}
+
+<script src="{% static 'js/google_map.js' %}"></script>
+
+{% endblock script %}
+
+
+

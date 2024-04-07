@@ -1,0 +1,309 @@
+{% extends "crm/base/base.html" %} 
+{% load static %} 
+{% block style %} 
+{% endblock style %} 
+
+{% block content %}
+
+<div class="page-content">
+  <div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="page-title-box d-sm-flex align-items-center justify-content-between"
+        >
+          <h4 class="mb-sm-0 font-size-18">Buses List</h4>
+        </div>
+      </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+      <div class="col-lg-12">
+        <form action="" method="get">
+        <div class="card">
+          <div class="card-body border-bottom">
+            <div class="d-flex align-items-center">
+              <h5 class="mb-0 card-title flex-grow-1">Buses List</h5>
+              <div class="flex-shrink-0">
+                <a href="{% url 'add-buses' %}" class="btn btn-primary"
+                  >Add New Bus</a
+                >
+                <a href="{% url 'buses-list' %}" class="btn btn-light"
+                  ><i class="mdi mdi-refresh"></i
+                ></a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body border-bottom">
+             
+            <div class="row g-3">
+              <div class="col-xxl-4 col-lg-6">
+                <input
+                  type="search"
+                  class="form-control"
+                  id="searchInput"
+                  name="name"
+                  placeholder="Search for bus name"
+                  value="{{ name }}"
+                />
+              </div>
+              <div class="col-xxl-2 col-lg-6">
+                <select class="form-control select2" name="status">
+
+                  <option value="Active" {% if status == "Active"  %} selected {% endif %}>Active</option>
+                  <option value="inActive" {% if status == "inActive"  %} selected {% endif %}>In Active</option>
+
+                </select>
+              </div>
+              <div class="col-xxl-2 col-lg-4">
+                <select class="form-control select2" name="company">
+                  <option value="">Select Company  Name</option>
+                    {% for q_company in companies %}
+                    	 <option value="{{q_company}}" {% if q_company == company  %} selected {% endif %}>{{q_company}}</option>
+                    {% endfor %}
+
+
+
+                </select>
+              </div>
+              <div class="col-xxl-2 col-lg-4">
+
+                <!-- input-group -->
+              </div>
+              <div class="col-xxl-2 col-lg-4">
+                <button type="submit" class="btn btn-soft-secondary w-100">
+                  <i class="mdi mdi-filter-outline align-middle"></i> Filter
+                </button>
+              </div>
+            </div>
+                 
+          </div>
+        </form>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle nowrap">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Bus Name</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">Available Status</th>
+                    <th class="align-middle">Bus Model</th>
+                    <th class="align-middle">Bus Emergency Number</th>
+                    <th class="align-middle">Luggage Capacity</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for bus in buses %}
+
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ bus.name }}</td>
+                    <td>{{ bus.company_name }}</td>
+                    <td>{{ bus.is_available }}</td>
+                    <td>{{ bus.bus_model }}</td>
+                    <td>{{ bus.bus_emergency_number }}</td>
+                    <td>
+                      <span class="badge badge-soft-success"
+                        >{{ bus.luggage_capacity }} Kg</span
+                      >
+                    </td>
+                    <td>
+                      <ul class="list-unstyled hstack gap-1 mb-0">
+                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                         <a href="#" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#busDetailsModal{{ bus.id }}"><i class="mdi mdi-eye-outline"></i></a>
+                         </li>
+                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                        <a href="{% url 'manage-bus' bus.id %}" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                         </li>
+                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{ bus.id }}" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                         </li>
+                     </ul>
+                    </td>
+                  </tr>
+                  <div class="modal fade" id="deleteConfirmationModal{{ bus.id }}" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel{{ bus.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-sm">
+                   <div class="modal-content">
+                   <form method="post" action="{% url 'delete_bus' bus.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="method" value="delete">
+                    <div class="modal-body px-4 py-5 text-center">
+                        <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="avatar-sm mb-4 mx-auto">
+                            <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
+                                <i class="mdi mdi-trash-can-outline"></i>
+                            </div>
+                        </div>
+                        <p class="text-muted font-size-16 mb-4">
+                            Are you sure you want to permanently erase the bus?
+                        </p>
+                        <div class="hstack gap-2 justify-content-center mb-0">
+                            <button type="submit" class="btn btn-danger">Delete Now</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                   </form>
+                   </div>
+                  </div>
+                 </div>
+    
+
+             <div class="modal fade" id="busDetailsModal{{ bus.id }}" tabindex="-1" role="dialog" aria-labelledby="busDetailsModalLabel{{ bus.id }}" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+
+                <div class="modal-body">
+                    {% if bus.bus_images.all %}
+                        <center>
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="max-height: 300px;">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        {% for image in bus.bus_images.all %}
+                            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+                        {% endfor %}
+                    </ol>
+                    <!-- Slides -->
+                    <div class="carousel-inner" style="height: 200px;">
+                        {% for image in bus.bus_images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" class="d-block w-100" alt="Bus Image" style="height: 100%; object-fit: cover;">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Controls -->
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                     </div>
+
+                        {% else %}
+                        <img src="/media/{{ bus.bus_logo }}" alt="bus" height="auto" width="200ppx">
+                    {% endif %}
+
+
+                </center>
+
+                    <p>Bus Model: {{ bus.bus_model }}</p>
+                    <p>Company Name: {{ bus.company_name }}</p>
+                    <p>Bus Number: {{ bus.bus_number }}</p>
+                    <p>Emergency Number: {{ bus.bus_emergency_number }}</p>
+                    <p>Luggage Capacity: {{ bus.luggage_capacity }} Kg</p>
+                    <!-- Add other bus details as needed -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" action="" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+               </div>
+            </div>
+      
+
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto me-auto">
+                <p class="text-muted mb-0">
+                    Showing <b>{{ page_obj.start_index }}</b> to <b>{{ page_obj.end_index }}</b> of <b>{{ page_obj.paginator.count }}</b> entries
+                </p>
+            </div>
+              <div class="col-auto">
+                <div class="card d-inline-block ms-auto mb-0">
+                  <div class="card-body p-2">
+                    <nav aria-label="Page navigation example" class="mb-0">
+                    <ul class="pagination mb-0">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1" aria-label="First">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="First">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+
+                            {% for i in page_obj.paginator.page_range %}
+                                {% if buses.number == i %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ i }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if buses.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ buses.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ buses.paginator.num_pages }}" aria-label="Last">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Last">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+                        </ul>
+
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+        
+        </div>
+        <!--end card-->
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!-- container-fluid -->
+
+
+
+{% endblock content%}
+ {% block scripts %} 
+ {% endblock scripts %}

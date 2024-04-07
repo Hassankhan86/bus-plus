@@ -1,0 +1,47 @@
+{% for bus in buses %}
+<div class="col-lg-4 responsive-column">
+    <div class="card-item car-card">
+        <div class="card-img">
+           
+                <img src="media/{{bus.bus_logo}}" alt="car-img">
+        
+            <span class="badge">{{bus.tag}}</span>
+            <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="Save for later">
+                <i class="la la-heart-o"></i>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-meta">{{bus.company_name}}</p>
+            <h3 class="card-title"><a href="#">{{bus.name}}</a></h3>
+            <div>
+                Self Drive Available: {% if bus.self_drive_available %} Yes {% else %} No {% endif %}
+            </div>
+
+            <div class="card-attributes">
+                <ul class="d-flex align-items-center">
+                    <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Passenger"><i class="la la-users"></i><span>{{bus.number_seats}}</span></li>
+                    <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Luggage"><i class="la la-suitcase"></i><span>{{bus.luggage_capacity}} Kg</span></li>
+                </ul>
+            </div>
+             {% for charge in bus.bus_charges.all %}
+                        <div
+                            class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">From:</span>
+                                <span class="price__num">${{charge.per_scale_charges}}</span>
+                                <span class="price__text">Per {{charge.scale}}</span>
+                            </p>
+
+
+                        </div>
+                      {% endfor %}
+            <br>
+                <button class="btn btn-primary btn-icon btn-icon-left busButton" id="busButton{{bus.id}}"  onclick="handleBusButtonClick('{{bus.id}}')">
+                    <i class="la la-check-circle" style="display: none;"></i>
+                    Select Bus
+                </button>
+            
+        </div>
+    </div><!-- end card-item -->
+</div><!-- end col-lg-4 -->
+{% endfor %}

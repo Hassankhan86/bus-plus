@@ -1,0 +1,104 @@
+
+{% extends 'booking/base/base.html' %}
+{% load static %}
+{% block style %}
+
+
+{% endblock style %}
+
+{% block body %}
+
+<section class="breadcrumb-area bread-bg-9">
+  <div class="breadcrumb-wrap">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-lg-6">
+                  <div class="breadcrumb-content">
+                      <div class="section-heading">
+                          <h2 class="sec__title text-white">Trip Reservation</h2>
+                      </div>
+                  </div><!-- end breadcrumb-content -->
+              </div><!-- end col-lg-6 -->
+              <div class="col-lg-6">
+                  <div class="breadcrumb-list text-right">
+                      <ul class="list-items">
+                          <li><a href="{% url 'index' %}">Home</a></li>
+                          <li>Trip Reservation</li>
+                      </ul>
+                  </div><!-- end breadcrumb-list -->
+              </div><!-- end col-lg-6 -->
+          </div><!-- end row -->
+      </div><!-- end container -->
+  </div><!-- end breadcrumb-wrap -->
+  <div class="bread-svg-box">
+      <svg class="bread-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none">
+          <polygon points="100 0 50 10 0 0 0 10 100 10"></polygon>
+      </svg>
+  </div>
+</section>
+<section  class="card-area section--padding">
+  <div  class="container">
+      <div class="row">
+          <div class="col-lg-2">
+          </div>
+  <div class="col-lg-8">
+
+  <h2 class="heading_text_color">Trip Reservations</h2>
+  <div class="large-string">
+    Looking for the perfect trip? With our trip reservation service, you can choose the trip that best suits your needs. Whether you’re traveling alone or with family and friends, we have a wide range of options to choose from.    
+    Our trip reservation service allows you to select your preferred destination, and activities. 
+    A small fee will be charged for trip reservations, which will vary based on the route and options you choose.   
+    Need some additional help planning your trip? Our experienced travel agents are here to assist you every step of the way. From finding the best deals to creating a personalized itinerary, we’ve got you covered.
+    
+    Please note that once a trip is reserved, changes may not be possible. Be sure to carefully review all details before finalizing your reservation.
+    Your trip confirmation will include all the information you need to enjoy your journey.Book you trip <a href="{% url 'booking' %}">here</a>
+
+    
+    We look forward to helping you plan your next adventure! 😊. If you need more information you can visit out <a href="{% url 'contact' %}">Contact Us Page</a>.
+
+  </div>
+  
+  <h2 class="heading_text_color">How can I reserve a Trip?</h2>
+  
+  <div class="large-string">
+
+    <p>
+        Reserving a trip is easy and convenient with our trip reservation service. Here’s how you can reserve your trip:</p>
+    <ol>
+        <li>When booking your trip, you’ll see the option to reserve your trip if it is available.</li>
+        <li>Select your preferred destination, and activities from the available options. Review all details and confirm your reservation.</li>
+        <li>Your booking confirmation will include all the information you need for your trip.</li>
+        <li>Please note that trip reservations may not be available for all of our partner services. If you do not have a trip reservation on your ticket, please follow the instructions provided during boarding.</li>
+    </ol>
+    <p>Our experienced travel agents are here to assist you every step of the way. If you have any questions or need help reserving your trip, don’t hesitate to <a href="{% url 'contact' %}">contact us</a>. We’re here to help you plan the perfect adventure! 😊</p>
+    <p>Lets Plan a trip for you  <strong> <a href="{% url 'index' %}"> Click Here</a></strong></p>
+</div>
+
+<h2 class="heading_text_color">Managing Your Trip Reservations</h2> 
+<div class="large-string"> <p>With our trip reservation service, you have the flexibility to manage your trip reservations at any time. Whether you need to add, change, or cancel a reservation, we’ve got you covered.</p> 
+    <ul> 
+    <li><strong>Adding a Trip Reservation:</strong> You can add a trip reservation during the initial booking process. Simply select your preferred destination, accommodation, and activities from the available options and confirm your reservation.</li> 
+    <li><strong>Changing a Trip Reservation:</strong> Need to make changes to your trip reservation? No problem! You can change your reservation up to 15 minutes prior to departure by visiting our website <a href="{% url 'manage-my-booking' %}">here</a>.
+         Please note that changes may be subject to availability and additional fees may apply.</li>
+    <li><strong>Canceling a Trip Reservation:</strong> If you need to cancel your trip reservation, 
+    you can do so up to 15 minutes prior to departure by visiting our website <a href="{% url 'manage-my-booking' %}">here</a>. You will receive a refund in the form of a voucher that can be used for future bookings. Please note that cancellation fees may apply.</li>
+    </ul> 
+    <p>Our experienced travel agents are here to assist you every step of the way. If you have any questions or need help managing your trip reservations, don’t hesitate to contact us. We’re here to help you plan the perfect adventure! 😊</p> </div>
+</div>
+      <div class="col-lg-2">
+      </div>
+ </div>
+</div>
+</section>
+
+
+
+  
+
+
+{% endblock body %}
+
+{% block script %}
+
+{% endblock script %}
+

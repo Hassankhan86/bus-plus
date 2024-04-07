@@ -1,0 +1,364 @@
+{% extends "crm/base/base.html" %} 
+{% load static %} 
+{% block style %} 
+{% endblock style %} 
+
+{% block content %}
+
+<div class="page-content">
+    <div class="container-fluid">
+      <!-- start page title -->
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="page-title-box d-sm-flex align-items-center justify-content-between"
+          >
+            <h4 class="mb-sm-0 font-size-18">Orders List</h4>
+          </div>
+        </div>
+      </div>
+      <!-- end page title -->
+  
+      <div class="row">
+        <div class="col-lg-12">
+        <form action="" method="get">
+            <div class="card-body border-bottom">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0 card-title flex-grow-1">Orders List</h5>
+                <div class="flex-shrink-0">
+
+                  <a href="{% url 'orders' %}" class="btn btn-light"
+                    ><i class="mdi mdi-refresh"></i
+                  ></a>
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card-body border-bottom">
+              <div class="row g-3">
+                <div class="col-xxl-3 col-lg-3">
+                  
+                  <input
+                    type="search"
+                    class="form-control"
+                    id="searchInput"
+                    name="order_id"
+                    value="{{ order_id }}"
+                    placeholder="Search by order id"
+                    
+                  />
+                  
+                </div>
+                  <div class="col-xxl-3 col-lg-3">
+
+                  <input
+                    type="search"
+                    class="form-control"
+                    id="searchInput"
+                    name="user_info"
+                    value="{{ user_info }}"
+                    placeholder="Search by name, email, and phone"
+
+                  />
+
+                </div>
+             
+                <div class="col-xxl-2 col-lg-4">
+                  <select class="form-control select2" name="status" >
+                    <option value="">Select Order Status</option>
+                    <option value="Pending" {% if status == "Pending"  %} selected {% endif %}>Pending</option>
+                    <option value="InProgress" {% if status == "InProgress"  %} selected {% endif %}>InProgress</option>
+                    <option value="Confirmed" {% if status == "Confirmed"  %} selected {% endif %}>Confirmed</option>
+                    <option value="Rejected" {% if status == "Rejected"  %} selected {% endif %}>Rejected</option>
+                    <option value="Cancelled" {% if status == "Cancelled"  %} selected {% endif %}>Cancelled</option>
+                  </select>
+                </div>
+                  <div class="col-xxl-2 col-lg-4">
+                  <select class="form-control select2" name="filter_by_date" >
+                    <option value="">Select Date</option>
+                    <option value="today" {% if filter_by_date == "today"  %} selected {% endif %}>Today</option>
+                    <option value="week" {% if filter_by_date == "week"  %} selected {% endif %}>This week</option>
+                    <option value="month" {% if filter_by_date == "month"  %} selected {% endif %}>this Month</option>
+                    <option value="year" {% if filter_by_date == "year"  %} selected {% endif %}>This year</option>
+                    <option value="all" {% if filter_by_date == "all"  %} selected {% endif %}>All</option>
+
+                  </select>
+                </div>
+                
+                <div class="col-xxl-2 col-lg-4">
+                  <button type="submit" class="btn btn-soft-secondary w-100">
+                    <i class="mdi mdi-filter-outline align-middle"></i> Filter
+                  </button>
+                </div>
+              </div>
+            </div>
+        </form>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered align-middle nowrap">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Order ID</th>
+                      <th scope="col">Full Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone Number</th>
+                      <th scope="col">Coupon</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Paid Amount</th>
+                      <th scope="col">Order Status</th>
+                      <th scope="col">Order Date</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for order in orders %}
+                   
+                   <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{order.order_id}}</td>
+                    <td>{{order.first_name}} {{order.last_name}}</td>
+                    <td>{{order.email}}</td>
+                    <td>{{order.phone_number}}</td>
+                    <td>{{order.coupon}}</td>
+                    <td>{{order.grand_total}}</td>
+                    <td>{{order.paid_amount}}</td>
+                     <td>
+                                                    {% if order.order_status == "Pending" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-warning">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "Rejected" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-danger">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "Completed" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-success">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "InProgress" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-warning">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "Cancelled" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-danger">{{ order.order_status }}</span>
+                                                    {% else %}
+                                                        <span class="badge-info py-1 px-2 badge bg-success">{{ order.order_status }}</span>
+                                                    {% endif %}
+                                                </td>
+                    <td>{{order.trip.created_at}}</td>
+                   
+                   
+                    <td>
+                      <ul class="list-unstyled hstack gap-1 mb-0">
+                   <li data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="View">
+                    <a href="{% url 'orders_view' order.id %}" target="_blank" >
+                        <i class="mdi mdi-eye-outline"></i>
+                    </a>
+                </li>
+
+                {% if order.order_status == "Pending" or order.order_status == "InProgress" %}
+                    <li data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Cancel Order">
+                        <a href="{% url 'order-reject' order.id %}" class="btn btn-sm btn-soft-danger">
+                            <i class="mdi mdi-close-circle-outline"></i>
+                        </a>
+                    </li>
+                      {% endif %}
+                {% if order.crm_admin_cash %}
+                    <li data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Add Cash Payment">
+                        <a href="#" data-bs-toggle="modal"
+                           data-bs-target="#add_cash_paymentModal{{ order.id }}"
+                           class="btn btn-sm btn-soft-success">
+                           <i class="mdi mdi-cash-multiple"></i>
+                        </a>
+                    </li>
+                      {% endif %}
+                    {% if order.order_status == "Confirmed" %}
+                        <li data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Make Order to Completed">
+                            <a href="{% url 'order-complete' order.id %}" class="btn btn-sm btn-soft-success">
+                                <i class="mdi mdi-check-circle-outline"></i>
+                            </a>
+                        </li>
+                {% endif %}
+
+
+
+
+
+                      </ul>
+                    </td>
+                  </tr>
+                   <!-- Modal -->
+                    <div class="modal fade" id="add_cash_paymentModal{{ order.id }}" tabindex="-1" aria-labelledby="add_cash_paymentLabel{{ order.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                            <div class="modal-content">
+                                <form method="post" action="{% url 'cash-payments' %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body px-4 py-5 text-center">
+                                        <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="avatar-sm mb-4 mx-auto">
+                                            <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
+                                                <i class="mdi mdi-currency-usd"></i>
+                                            </div>
+                                        </div>
+                                        <h4>Total Amount: ${{ order.grand_total }}</h4>
+                                        <p class="text-muted font-size-16 mb-4">
+                                            Update the received payment amount for this stop.
+                                        </p>
+                                        <div class="mb-3">
+                                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                                            <label for="paymentAmount{{ order.id }}" class="form-label">Received Payment Amount</label>
+                                            <input required type="text" class="form-control" id="paymentAmount{{ order.id }}" name="payment_amount" placeholder="Enter received payment">
+                                        </div>
+                                        <div class="hstack gap-2 justify-content-center mb-0">
+                                            <button type="submit" class="btn btn-primary">Update Payment</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                   {% endfor %}
+                   
+                   
+                  </tbody>
+                </table>
+              </div>
+              <div class="row justify-content-between align-items-center">
+                <div class="col-auto me-auto">
+                  <p class="text-muted mb-0">
+                    Showing <b>{{ page_obj.start_index }}</b> to <b>{{ page_obj.end_index }}</b> of <b>{{ page_obj.paginator.count }}</b> entries
+                </p>
+                </div>
+                <div class="col-auto">
+                  <div class="card d-inline-block ms-auto mb-0">
+                    <div class="card-body p-2">
+                      <nav aria-label="Page navigation example" class="mb-0">
+                        <ul class="pagination mb-0">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1" aria-label="First">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="First">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+
+                            {% for i in page_obj.paginator.page_range %}
+                                {% if orders.number == i %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ i }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if orders.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ orders.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ orders.paginator.num_pages }}" aria-label="Last">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Last">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                <!--end col-->
+              </div>
+              <!--end row-->
+            </div>
+
+
+        <!--end col-->
+      </div>
+      <!--end row-->
+    </div>
+    <!-- container-fluid -->
+  </div>
+  
+  <div
+    class="modal fade"
+    id="jobDelete"
+    tabindex="-1"
+    aria-labelledby="jobDeleteLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body px-4 py-5 text-center">
+          <button
+            type="button"
+            class="btn-close position-absolute end-0 top-0 m-3"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+          <div class="avatar-sm mb-4 mx-auto">
+            <div
+              class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3"
+            >
+              <i class="mdi mdi-trash-can-outline"></i>
+            </div>
+          </div>
+          <p class="text-muted font-size-16 mb-4">
+            Are you sure you want to permanently erase the job.
+          </p>
+  
+          <div class="hstack gap-2 justify-content-center mb-0">
+            <button type="button" class="btn btn-danger">Delete Now</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content%}
+ {% block scripts %} 
+ {% endblock scripts %}

@@ -1,0 +1,36 @@
+{% load static %}
+<!-- JAVASCRIPT -->
+<script src="{% static 'crm/assets/libs/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'crm/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'crm/assets/libs/metismenu/metisMenu.min.js' %}"></script>
+<script src="{% static 'crm/assets/libs/simplebar/simplebar.min.js' %}"></script>
+<script src="{% static 'crm/assets/libs/node-waves/waves.min.js' %}"></script>
+<script src="{% static 'crm/assets/libs/dropzone/min/dropzone.min.js' %}"></script>
+
+<!-- apexcharts -->
+<script src="{% static 'crm/assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+<!-- dashboard init -->
+<script src="{% static 'crm/assets/js/pages/dashboard.init.js' %}"></script>
+
+<!-- App js -->
+<script src="{% static 'crm/assets/js/app.js' %}"></script>
+<script src="{% static 'crm/toast/toast.js' %}"></script>
+<script src="{% static 'crm/toast/bootstrap-notify.js' %}"></script>
+{#this lib blocking dropdwon  on crm headr{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>#}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-toaster@4.0.1/js/bootstrap-toaster.min.js"></script>
+
+{# if issue with  apis or  something  then check to uncmmet the script , notification will not work#}
+{#<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>#}
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
+
+{% block scripts %}
+
+{% endblock scripts%}

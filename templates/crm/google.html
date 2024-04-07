@@ -1,0 +1,200 @@
+{% extends "crm/base/base.html" %}
+{% load static %}
+{% block style %}
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <style>
+        .fc-event {
+            background-color: lightgray;
+        }
+
+    </style>
+{% endblock style %}
+
+{% block content %}
+
+
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div
+                        class="page-title-box d-sm-flex align-items-center justify-content-between"
+                >
+                    <h4 class="mb-sm-0 font-size-18">Google</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body border-bottom">
+                        <div class="d-flex align-items-center">
+                            <h5 class="mb-0 card-title flex-grow-1">Google Calendar</h5>
+                            <div class="flex-shrink-0">
+                                <a href="{% url 'crm-google-logout' %}" class="btn btn-light"
+                                ><i class="mdi mdi-logout"></i
+                                ></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            {% if not google %}
+                                <div class="container mt-4">
+                                    <h1>Google Integration</h1>
+                                    <p>Connect your Google</p>
+                                    <a href="{% url 'crm-google-login' %}" class="btn btn-primary">Integrate with
+                                        Google</a>
+                                </div>
+                            {% else %}
+
+                                <div class="card mb-3">
+                                <div class="card-header">
+                                    Connected Google Account
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Name: {{ google.name }}</h5>
+                                    <p class="card-text">Email: {{ google.email }}</p>
+                                </div>
+
+                            {% endif %}
+                            </div>
+                            <div class="row">
+                                <div id='calendar'></div>
+                            </div>
+                            <!-- end row -->
+                        </div>
+                    </div>
+                    <!--end card-->
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <!-- container-fluid -->
+    </div>
+
+
+    <!-- The modal to display event details -->
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 id="eventTitle" class="text-primary"></h4>
+                                <p id="eventStart"></p>
+                                <p id="eventEnd"></p>
+                                <p id="eventDescription"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Meeting Link:</strong></p>
+                                <p><a href="#" target="_blank" id="eventMeetingLink">Join Meeting</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+{% block scripts %}
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var calendarEl = document.getElementById("calendar");
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                editable:true,
+                // Your FullCalendar configuration options go here
+
+                // Set up event callbacks
+                dateClick: function (info) {
+                    // Handle date clicks (optional)
+                    console.log("Clicked on: " + info.dateStr);
+                },
+                eventDidMount: function (info) {
+                    // Change the title's color to white when the event is mounted
+                    var titleElement = info.el.querySelector(".fc-title");
+                    if (titleElement) {
+                        titleElement.style.color = "white";
+                    }
+
+                },
+                eventRender: function (info) {
+                    // Customize the event's text color to white
+                    info.el.style.color = "white"
+                    var title = info.event.title;
+
+                },
+                eventClick: function (info) {
+                    // Show the event details in the eventModal
+                    var eventModal = document.getElementById("eventModal");
+                    var eventTitle = document.getElementById("eventTitle");
+                    var eventStart = document.getElementById("eventStart");
+                    var eventEnd = document.getElementById("eventEnd");
+                    var eventDescription = document.getElementById("eventDescription");
+                    var eventMeetingLink = document.getElementById("eventMeetingLink");
+
+                    // Populate the modal with event details
+                    eventTitle.textContent = info.event.title;
+                    eventStart.textContent = "Start: " + info.event.start.toISOString();
+                    eventEnd.textContent = "End: " + info.event.end.toISOString();
+                    eventDescription.textContent = "Description: " + info.event.extendedProps.description;
+
+                    eventMeetingLink.href = info.event.extendedProps.meetingLink;
+                    eventMeetingLink.textContent = "Join Meeting";
+                    eventMeetingLink.style.display = "block";
+
+                    // Show the modal
+                    var modal = new bootstrap.Modal(eventModal);
+                    modal.show();
+                },
+                datesSet: function (info) {
+                    // Handle date range changes
+                    var start = info.startStr;
+                    var end = info.endStr;
+
+                    // Fetch events from your API with the new date range
+                    fetchEventsFromAPI(start, end);
+                },
+            });
+
+            // Initial fetch of events from your API
+            fetchEventsFromAPI();
+
+            // Render the calendar
+            calendar.render();
+
+            function fetchEventsFromAPI(start = null, end = null) {
+                $.ajax({
+                    type: "GET",
+                    url: "/crm/api/events" + `?start_date=${start}&end_date=${end}`,
+                    dataType: "json",
+
+                    success: function (data) {
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(data);
+                        return data;
+                    },
+                });
+                return {};
+            }
+
+            // Function to fetch events from your API
+
+        });
+
+
+    </script>
+
+{% endblock scripts %}

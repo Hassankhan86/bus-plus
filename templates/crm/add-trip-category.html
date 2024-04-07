@@ -1,0 +1,44 @@
+{% extends "crm/base/base.html" %}
+
+{% load static %} 
+
+{% block style %} 
+
+{% endblock style %}
+
+{% block content %}
+
+<section class="booking-area padding-top150px padding-bottom-70px">
+  <div class="row" style="padding-top: 100px">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        
+        <div class="card-body">
+          <!-- HTML form for adding bus data -->
+          <center><h2>Add Trip Category</h2></center>
+          <form action="" method="post">
+            {% csrf_token %}
+          
+            <div class="mb-3">
+              <label for="type" class="form-label">Name</label>
+
+              {{ form.name }}
+              
+            </div>
+          
+            
+          
+            <button type="submit" class="btn btn-primary">Add Trip Category</button>
+          </form>
+          
+        </div>
+       
+      </div>
+    </div>
+    <div  class="col-lg-2"></div>
+  </div>
+</section>
+
+{% endblock content%} {% block scripts %} {% endblock scripts %}

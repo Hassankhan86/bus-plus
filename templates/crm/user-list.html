@@ -1,0 +1,258 @@
+{% extends "crm/base/base.html" %} 
+{% load static %} 
+{% block style %} 
+{% endblock style %} 
+
+{% block content %}
+
+<div class="page-content">
+  <div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="page-title-box d-sm-flex align-items-center justify-content-between"
+        >
+          <h4 class="mb-sm-0 font-size-18">User List</h4>
+        </div>
+      </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body border-bottom">
+            <div class="d-flex align-items-center">
+              <h5 class="mb-0 card-title flex-grow-1">User Lists</h5>
+              <div class="flex-shrink-0">
+                <a href="{% url 'users' %}" class="btn btn-light"
+                  ><i class="mdi mdi-refresh"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body border-bottom">
+            <form action="" method="get">
+            <div class="row g-3">
+              <div class="col-xxl-4 col-lg-6">
+                
+                <input
+                  type="search"
+                  class="form-control"
+                  id="searchInput"
+                  name="user_info"
+                  placeholder="Search by name, email, and phone"
+                  value="{{ user_info }}"
+                  
+                />
+                
+              </div>
+           
+              <div class="col-xxl-2 col-lg-4">
+                <select class="form-control select2"  name="status">
+                  <option>Select Type</option>
+                  {% comment %} <option value="isActive" {% if status == "isActive"  %} selected {% endif %}>Is Active</option> {% endcomment %}
+                  <option value="isStaff" {% if status == "isStaff"  %} selected {% endif %}>Is Staff</option>
+                </select>
+              </div>
+              
+              <div class="col-xxl-2 col-lg-4">
+                <button type="submit" class="btn btn-soft-secondary w-100">
+                  <i class="mdi mdi-filter-outline align-middle"></i> Filter
+                </button>
+              </div>
+            </div>
+          </form>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle nowrap">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Driving License</th>
+                    <th scope="col">Is Active</th>
+                    <th scope="col">Is Staff</th>
+                    <th scope="col">Date Joined</th>
+                    {% comment %} <th scope="col">Action</th> {% endcomment %}
+                  </tr>
+                </thead>
+                <tbody>
+                 {% for user in users %}
+                 
+                 <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{user.username}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.phone_number}}</td>
+                  <td>{{user.driving_license}}</td>
+                  <td>{{user.is_active}}</td>
+                  <td>{{user.is_staff}}</td>
+                  <td>{{user.date_joined}}</td>
+                 
+                 
+                  {% comment %} <td>
+                    <ul class="list-unstyled hstack gap-1 mb-0">
+                     
+                      <li
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Edit"
+                      >
+                        <a
+                          href="{% url 'add-user' %}"
+                          class="btn btn-sm btn-soft-info"
+                          ><i class="mdi mdi-pencil-outline"></i
+                        ></a>
+                      </li>
+                     
+                    </ul>
+                  </td> {% endcomment %}
+                </tr>
+                 
+                 {% endfor %}
+                 
+                 
+                </tbody>
+              </table>
+            </div>
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto me-auto">
+                <p class="text-muted mb-0">
+                  Showing <b>{{ page_obj.start_index }}</b> to <b>{{ page_obj.end_index }}</b> of <b>{{ page_obj.paginator.count }}</b> entries
+              </p>
+              </div>
+              <div class="col-auto">
+                <div class="card d-inline-block ms-auto mb-0">
+                  <div class="card-body p-2">
+                    <nav aria-label="Page navigation example" class="mb-0">
+                      <ul class="pagination mb-0">
+                          {% if page_obj.has_previous %}
+                              <li class="page-item">
+                                  <a class="page-link" href="?page=1" aria-label="First">
+                                      <span aria-hidden="true">&laquo;</span>
+                                  </a>
+                              </li>
+                              <li class="page-item">
+                                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
+                                  </a>
+                              </li>
+                          {% else %}
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="First">
+                                      <span aria-hidden="true">&laquo;</span>
+                                  </span>
+                              </li>
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
+                                  </span>
+                              </li>
+                          {% endif %}
+
+                          {% for i in page_obj.paginator.page_range %}
+                              {% if users.number == i %}
+                                  <li class="page-item active">
+                                      <span class="page-link">{{ i }}</span>
+                                  </li>
+                              {% else %}
+                                  <li class="page-item">
+                                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                  </li>
+                              {% endif %}
+                          {% endfor %}
+
+                          {% if users.has_next %}
+                              <li class="page-item">
+                                  <a class="page-link" href="?page={{ users.next_page_number }}" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </a>
+                              </li>
+                              <li class="page-item">
+                                  <a class="page-link" href="?page={{ users.paginator.num_pages }}" aria-label="Last">
+                                      <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                              </li>
+                          {% else %}
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </span>
+                              </li>
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Last">
+                                      <span aria-hidden="true">&raquo;</span>
+                                  </span>
+                              </li>
+                          {% endif %}
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+        </div>
+        <!--end card-->
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!-- container-fluid -->
+</div>
+
+<div
+  class="modal fade"
+  id="jobDelete"
+  tabindex="-1"
+  aria-labelledby="jobDeleteLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body px-4 py-5 text-center">
+        <button
+          type="button"
+          class="btn-close position-absolute end-0 top-0 m-3"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="avatar-sm mb-4 mx-auto">
+          <div
+            class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3"
+          >
+            <i class="mdi mdi-trash-can-outline"></i>
+          </div>
+        </div>
+        <p class="text-muted font-size-16 mb-4">
+          Are you sure you want to permanently erase the job.
+        </p>
+
+        <div class="hstack gap-2 justify-content-center mb-0">
+          <button type="button" class="btn btn-danger">Delete Now</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content%}
+ {% block scripts %} 
+ {% endblock scripts %}

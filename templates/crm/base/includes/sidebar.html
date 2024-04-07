@@ -1,0 +1,200 @@
+{% load static %}
+<!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+
+                <div data-simplebar class="h-100">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title" key="t-menu">Menu</li>
+
+                            <li>
+                                <a href="/crm/" class=" waves-effect">
+                                    <i class="bx bx-home-circle"></i>
+                                    <span key="t-dashboards">Dashboard</span>
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-layout"></i>
+                                    <span key="t-layouts">Manage Buses</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li>
+                                        <a href="{% url 'add-buses' %}"  key="t-vertical">Add Buses</a>
+                                        <a href="{% url 'buses-list' %} "  key="t-vertical">Buses List</a>
+                                        
+                                        
+
+                                    </li>
+
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-store"></i>
+                                    <span key="t-ecommerce">Manage Coupon</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                   
+                                    <li><a href="{% url 'add-coupon' %} "  key="t-vertical">Add Coupon</a></li>
+                                    <li><a href="{% url 'coupon-list' %} "  key="t-vertical">Cupons</a></li>
+                                   
+                                    
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'users' %}" class=" waves-effect">
+                                    <i class="bx bx-user"></i>
+                                    <span key="t-dashboards">Users</span>
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="{% url 'orders' %}" class=" waves-effect">
+                                    <i class="bx bx-cart"></i>
+                                    <span key="t-dashboards">Manage Orders</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="{% url 'payments' %}" class=" waves-effect">
+                                    <i class="bx bx-credit-card"></i>
+                                    <span key="t-dashboards">Manage Payments</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="{% url 'refunds' %}" class=" waves-effect">
+                                    <i class="bx bx-credit-card"></i>
+                                    <span key="t-dashboards">Manage Refunds</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="{% url 'refunds-requests' %}" class=" waves-effect">
+                                    <i class="bx bx-git-pull-request"></i>
+                                    <span key="t-dashboards">Refunds Request</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-globe"></i>
+                                    <span key="t-dashboards">Manage Trips</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="{% url 'trip-list' %}" key="t-vertical">
+                                            
+                                            <span key="t-dashboards">Manage Trips</span>
+                                        </a>
+        
+                                    </li>
+                                    <li><a href="{% url 'featured-trip-create' %} " key="t-vertical">Create Featured Trip</a></li>
+                                    <li><a href="{% url 'featured-trip' %}" key="t-full-calendar">Featured Trips </a></li>
+                                    <li><a href="{% url 'trip-category-list' %}" key="t-full-calendar">Trip Categories</a></li>
+                                    <li><a href="{% url 'add-trip-category' %}" key="t-full-calendar">Add Trip category</a></li>
+                                </ul>
+                            </li>
+                          
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-help-circle"></i>
+                                    <span key="t-dashboards">Manage FAQs</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{% url 'add-faq' %} " key="t-vertical">Add FAQ</a></li>
+                                    <li><a href="{% url 'faq-list' %}" key="t-full-calendar">FAQs</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-city"></i>
+                                    <span key="t-dashboards">Manage Cities</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{% url 'add-city' %} " key="t-vertical">Add City</a></li>
+                                    <li><a href="{% url 'city-list' %} " key="t-vertical">Cities</a></li>
+                                  
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fa fa-map-marker-alt" style="font-size=5;"></i>
+                                    <span key="t-dashboards">Manage Stops</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{% url 'add-stop-charges' %} " key="t-vertical">Add Stop Charge</a></li>
+                                    <li><a href="{% url 'stop-charges-list' %} " key="t-vertical">Stop Charges</a></li>
+                                    
+                                  
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fa fa-bus" style="font-size=5;"></i>
+                                    <span key="t-dashboards">Manage License</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{% url 'license-list' %} " key="t-vertical">Licenses</a></li>
+                                    <li><a href="{% url 'add-license' %} " key="t-vertical">Add License</a></li>
+                                    
+                                  
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-shield-alt" style="font-size=5;"></i>
+                                    <span key="t-dashboards">Manage Insurance</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{% url 'insurance-list' %} " key="t-vertical">Insurances</a></li>
+                                    <li><a href="{% url 'add-insurance' %} " key="t-vertical">Add Insurance</a></li>
+                                    
+                                  
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'xero' %}" class=" waves-effect">
+                                  <img src="{% static 'images/xero-icn-24.png' %}" style="height: 25px">
+                                    <span key="t-dashboards">Xero</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="{% url 'crm-google' %}" class=" waves-effect">
+
+                                    <i class="fa fa-calendar" style="font-size=5;"></i>
+                                    <span key="t-dashboards">Google Calendar</span>
+                                </a>
+
+                            </li>
+                            
+
+                           
+
+
+
+                           
+
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->

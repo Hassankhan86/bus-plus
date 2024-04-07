@@ -1,0 +1,252 @@
+{% extends "crm/base/base.html" %}
+
+{% load static %} 
+
+{% block style %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" rel="stylesheet" type="text/css" />
+
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+
+<style>
+
+  .horizontal-images {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .image-container {
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+  }
+
+  .remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+</style>
+</style>
+{% endblock style %}
+
+{% block content %}
+
+<section class="booking-area padding-top150px padding-bottom-70px">
+  <div class="row" style="padding-top: 100px">
+    <div class="col-lg-2 ">
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+
+        <div class="card-body">
+          <!-- HTML form for adding bus data -->
+          <center><h2>Add Bus</h2></center>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="bus_number" class="form-label">Bus Title</label>
+                {{ form.name }}
+            </div>
+              <div class="mb-3">
+              <label for="bus_number" class="form-label">Registration Number</label>
+                {{ form.bus_number }}
+            </div>
+
+            <div class="mb-3">
+              <label for="company_name" class="form-label">Company Name</label>
+              {{ form.company_name }}
+            </div>
+
+            <div class="mb-3">
+              <label for="bus_model" class="form-label">Bus Model</label>
+              {{ form.bus_model }}
+            </div>
+           <div class="mb-3">
+              <label for="emergency_number" class="form-label">Number of  Seats</label>
+              {{ form.number_seats }}
+            </div>
+              <div class="mb-3">
+              <label for="luggage_capacity" class="form-label">Luggage Capacity</label>
+             {{ form.luggage_capacity }}
+            </div>
+              <div class="mb-3">
+              <label for="tag" class="form-label">Bus Tag</label>
+             {{ form.tag }}
+                   <span>{{ form.tag.errors }}</span>
+            </div>
+                <div class="row">
+
+
+               {% for form in bus_charge_formset %}
+                    <div class="col-lg-6 col-md-6">
+                    {{ form.id }}
+                    <div class="mb-3">
+                  <label for="scale" class="form-label">Bus Scale</label>
+                 {{ form.scale }}
+                </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                    <div class="mb-3">
+                  <label for="per_scale_charges" class="form-label">Bus Charges Per scale</label>
+                    {{ form.per_scale_charges }}
+                      <span>{{ form.per_scale_charges.errors }}</span>
+                    </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+
+            <div class="mb-3">
+              <label for="emergency_number" class="form-label">Bus Emergency Number</label>
+              {{ form.bus_emergency_number }}
+            </div>
+
+
+
+            <div class="mb-3">
+
+              <label for="{{ form.images.id_for_label }}" class="form-label">Bus Image</label>
+              {{ form.images }}
+            </div>
+                <div class="row" style="padding-left: 5rem">
+                <div class="col-lg-6 col-md-6">
+                    <div class="row align-items-center">
+
+                            {{ form.is_available }}
+
+                            <label for="is_available" class="form-label custom-checkbox-label">Bus Availability</label>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="row align-items-center">
+                          {{ form.self_drive_available }}
+                            <label for="self_drive_available" class="form-label custom-checkbox-label">Bus Availability for Self Drive</label>
+
+                    </div>
+                </div>
+                </div>
+
+
+
+
+                <br>
+                <br>
+
+
+
+
+              <div class="mb-3">
+
+             <button type="submit" class="btn btn-primary">Save Bus</button>
+            </div>
+
+
+
+          </form>
+
+        </div>
+        <br>
+        <br>
+
+      </div>
+    </div>
+    <div  class="col-lg-2"></div>
+  </div>
+</section>
+
+{% endblock content%}
+ {% block scripts %}
+     <script type="text/javascript">
+        $("#id_images").fileinput({
+
+      theme: 'fa',
+      uploadUrl: "/api/bus_image/",
+      dropZoneEnabled: false,
+      showUpload: false,
+      showRemove: false,
+      autoReplace: 'true',
+      showZoom: false,
+      uploadAsync: true,
+      initialPreviewShowDelete: true,
+      allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],
+      overwriteInitial: false,
+      initialPreviewAsData: true,
+      fileActionSettings: {
+        showUpload: false,
+        showZoom: false,
+        showDrag: false,
+      },
+
+
+            initialPreview: [
+                {% if  bus.bus_images.all %}
+
+                     {% for image in bus.bus_images.all %}
+                        "{{ request.scheme }}://{{ request.get_host }}{{ image.image.url }}",
+                    {% endfor %}
+                {% endif %}
+                ],
+
+            initialPreviewConfig: [
+                    {% if bus.bus_images.all %}
+                        {% for image in bus.bus_images.all %}
+                            {
+                                caption: "{{ image.image.name }}",
+                                size: {{ image.image.size }},
+                                key: "{{ image.id }}",
+                                url: '{% url "delete_bus_image" image.id %}',
+
+
+
+
+
+
+                            },
+                        {% endfor %}
+                    {% endif %}
+                ],
+
+
+        });
+            const preview = $('#id_images').fileinput('getPreview');
+
+
+
+
+$('#id_images').on('filebeforedelete', function() {
+    return new Promise(function (resolve, reject) {
+        $.confirm({
+            title: 'Confirmation!',
+            content: 'Are you sure you want to delete this image?',
+            type: 'red',
+            buttons: {
+                ok: {
+                    btnClass: 'btn-primary text-white',
+                    keys: ['enter'],
+                    action: function () {
+                        resolve();
+                    }
+                },
+                cancel: function () {
+                    $.alert('File deletion was aborted! ');
+                }
+            }
+        });
+    });  });
+
+    </script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+ {% endblock scripts %}

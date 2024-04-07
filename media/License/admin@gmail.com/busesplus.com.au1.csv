@@ -1,0 +1,16 @@
+busesplus.com.au.,3600,IN,SOA,ns1.partnerconsole.net.,hostmaster.partnerconsole.net.,2023082200,86400,7200,604800,7200
+,3600,IN,A,5.22.145.180
+www,3600,IN,A,5.22.145.180
+,3600,IN,A,5.22.145.155
+www,3600,IN,A,5.22.145.155
+staging,3600,IN,A,54.166.126.138
+,3600,IN,NS,ns1.partnerconsole.net.
+,3600,IN,NS,ns2.partnerconsole.net.
+,3600,IN,NS,ns3.partnerconsole.net.
+,3600,IN,MX,10,mx1.mail-forwarder.io.
+,3600,IN,MX,20,mx2.mail-forwarder.io.
+pop3,3600,IN,CNAME,pop3.partnerconsole.net.
+webmail,3600,IN,CNAME,webmail.partnerconsole.net.
+imap,3600,IN,CNAME,imap.partnerconsole.net.
+smtp,3600,IN,CNAME,smtp.partnerconsole.net.
+pop,3600,IN,CNAME,pop3.partnerconsole.net.

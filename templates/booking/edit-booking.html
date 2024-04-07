@@ -1,0 +1,1706 @@
+{% extends 'booking/base/base.html' %}
+{% load static %}
+{% block style %}
+{% endblock style %}
+
+{% block body %}
+
+<section class="breadcrumb-area bread-bg-7">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="breadcrumb-content">
+                        <div class="section-heading">
+                            <h2 class="sec__title text-white">Bus List</h2>
+                        </div>
+                    </div><!-- end breadcrumb-content -->
+                </div><!-- end col-lg-6 -->
+
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+    <div class="bread-svg-box">
+        <svg class="bread-svg" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 10" preserveAspectRatio="none">
+            <polygon points="100 0 50 10 0 0 0 10 100 10"></polygon>
+        </svg>
+    </div><!-- end bread-svg -->
+</section><!-- end breadcrumb-area -->
+
+<section class="booking-area padding-top-100px padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="form-box">
+                    <form action method="post" class="details_form">
+                        {% csrf_token %}
+                        <div class="form-content">
+                            <div class="sidebar-widget">
+                                <h3 class="title stroke-shape">Search Buses</h3>
+                                <div class="section-tab section-tab-2 pb-2">
+                                    <ul class="nav nav-tabs" id="myTab3" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="one-way-tab" data-toggle="tab" href="#one-way" role="tab"
+                                                aria-controls="one-way" aria-selected="true">
+                                                One way
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="round-trip-tab" data-toggle="tab" href="#round-trip" role="tab"
+                                                aria-controls="round-trip" aria-selected="false">
+                                                Round Trip
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="sidebar-widget-item">
+                                    <div class="contact-form-action">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+
+                                                <input type="hidden"
+                                                    id="selectedBusIds"
+                                                    name="selectedBusIds">
+                                                <input type="hidden"
+                                                    id="trip_type"
+                                                    name="trip_type">
+
+                                                <div class="input-box">
+                                                    <label class="label-text">Pick-up
+                                                        From</label>
+                                                    <div class="form-group">
+                                                        <span
+                                                            class="la la-map-marker form-icon"></span>
+                                                        <input
+                                                            class="form-control pickup"
+                                                            id="pickup"
+                                                            name="pickup"
+                                                            value="{% if pickup != None %} {{pickup}} {% endif %}"
+                                                            type="text"
+                                                            placeholder="Destination, city, or region" />
+                                                    </div>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label class="label-text">Pick-up
+                                                        Date</label>
+                                                    <div class="form-group">
+                                                        <span
+                                                            class="la la-calendar form-icon"></span>
+
+                                                        <input
+                                                            class="date-range form-control daterange-single"
+                                                            type="text"
+                                                            min='2023-07-23'
+                                                            value="{% if pickup_date != None %} {{pickup_date}} {% endif %}"
+                                                            name="pickup_date"
+                                                            onblur="updateDropOffTimeAndDate()"
+                                                            id="pickup_date" />
+
+                                                    </div>
+                                                </div>
+                                                <input type="hidden"
+                                                    name="pickup_lat"
+                                                    id="pickup_lat" />
+                                                <input type="hidden"
+                                                    name="pickup_long"
+                                                    id="pickup_long" />
+                                                <input type="hidden"
+                                                    name="destination_lat"
+                                                    id="destination_lat" />
+                                                <input type="hidden"
+                                                    name="destination_long"
+                                                    id="destination_long" />
+                                                <input type="hidden"
+                                                    name="total_time_in_mint"
+                                                    id="total_time_in_mint" />
+                                                <input type="hidden"
+                                                    name="total_distance_in_number"
+                                                    id="total_distance_in_number" />
+                                                <div class="input-box">
+                                                    <label class="label-text">Time</label>
+                                                    <div class="form-group">
+                                                        <div
+                                                            class="select-contain w-auto">
+                                                            <select
+                                                                class="select-contain-select"
+                                                                name="pickup_time"
+                                                                id="pickup_time">
+                                                                <option
+                                                                    value="1200AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1200AM"
+                                                                    %}selected{%
+                                                                    endif %}>12:00AM</option>
+                                                                <option
+                                                                    value="1230AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1230AM"
+                                                                    %}selected{%
+                                                                    endif %}>12:30AM</option>
+                                                                <option
+                                                                    value="0100AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0100AM"
+                                                                    %}selected{%
+                                                                    endif %}>1:00AM</option>
+                                                                <option
+                                                                    value="0130AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0130AM"
+                                                                    %}selected{%
+                                                                    endif %}>1:30AM</option>
+                                                                <option
+                                                                    value="0200AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0200AM"
+                                                                    %}selected{%
+                                                                    endif %}>2:00AM</option>
+                                                                <option
+                                                                    value="0230AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0230AM"
+                                                                    %}selected{%
+                                                                    endif %}>2:30AM</option>
+                                                                <option
+                                                                    value="0300AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0300AM"
+                                                                    %}selected{%
+                                                                    endif %}>3:00AM</option>
+                                                                <option
+                                                                    value="0330AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0330AM"
+                                                                    %}selected{%
+                                                                    endif %}>3:30AM</option>
+                                                                <option
+                                                                    value="0400AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0400AM"
+                                                                    %}selected{%
+                                                                    endif %}>4:00AM</option>
+                                                                <option
+                                                                    value="0430AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0430AM"
+                                                                    %}selected{%
+                                                                    endif %}>4:30AM</option>
+                                                                <option
+                                                                    value="0500AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0500AM"
+                                                                    %}selected{%
+                                                                    endif %}>5:00AM</option>
+                                                                <option
+                                                                    value="0530AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0530AM"
+                                                                    %}selected{%
+                                                                    endif %}>5:30AM</option>
+                                                                <option
+                                                                    value="0600AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0600AM"
+                                                                    %}selected{%
+                                                                    endif %}>6:00AM</option>
+                                                                <option
+                                                                    value="0630AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0630AM"
+                                                                    %}selected{%
+                                                                    endif %}>6:30AM</option>
+                                                                <option
+                                                                    value="0700AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0700AM"
+                                                                    %}selected{%
+                                                                    endif %}>7:00AM</option>
+                                                                <option
+                                                                    value="0730AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0730AM"
+                                                                    %}selected{%
+                                                                    endif %}>7:30AM</option>
+                                                                <option
+                                                                    value="0800AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0800AM"
+                                                                    %}selected{%
+                                                                    endif %}>8:00AM</option>
+                                                                <option
+                                                                    value="0830AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0830AM"
+                                                                    %}selected{%
+                                                                    endif %}>8:30AM</option>
+                                                                <option
+                                                                    value="0900AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0900AM"
+                                                                    %}selected{%
+                                                                    endif %}>9:00AM</option>
+                                                                <option
+                                                                    value="0930AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0930AM"
+                                                                    %}selected{%
+                                                                    endif %}>9:30AM</option>
+                                                                <option
+                                                                    value="1000AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1000AM"
+                                                                    %}selected{%
+                                                                    endif %}>10:00AM</option>
+                                                                <option
+                                                                    value="1030AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1030AM"
+                                                                    %}selected{%
+                                                                    endif %}>10:30AM</option>
+                                                                <option
+                                                                    value="1100AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1100AM"
+                                                                    %}selected{%
+                                                                    endif %}>11:00AM</option>
+                                                                <option
+                                                                    value="1130AM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1130AM"
+                                                                    %}selected{%
+                                                                    endif %}>11:30AM</option>
+                                                                <option
+                                                                    value="1200PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1200PM"
+                                                                    %}selected{%
+                                                                    endif %}>12:00PM</option>
+                                                                <option
+                                                                    value="1230PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1230PM"
+                                                                    %}selected{%
+                                                                    endif %}>12:30PM</option>
+                                                                <option
+                                                                    value="0100PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0100PM"
+                                                                    %}selected{%
+                                                                    endif %}>1:00PM</option>
+                                                                <option
+                                                                    value="0130PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0130PM"
+                                                                    %}selected{%
+                                                                    endif %}>1:30PM</option>
+                                                                <option
+                                                                    value="0200PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0200PM"
+                                                                    %}selected{%
+                                                                    endif %}>2:00PM</option>
+                                                                <option
+                                                                    value="0230PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0230PM"
+                                                                    %}selected{%
+                                                                    endif %}>2:30PM</option>
+                                                                <option
+                                                                    value="0300PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0300PM"
+                                                                    %}selected{%
+                                                                    endif %}>3:00PM</option>
+                                                                <option
+                                                                    value="0330PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0330PM"
+                                                                    %}selected{%
+                                                                    endif %}>3:30PM</option>
+                                                                <option
+                                                                    value="0400PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0400PM"
+                                                                    %}selected{%
+                                                                    endif %}>4:00PM</option>
+                                                                <option
+                                                                    value="0430PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0430PM"
+                                                                    %}selected{%
+                                                                    endif %}>4:30PM</option>
+                                                                <option
+                                                                    value="0500PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0500PM"
+                                                                    %}selected{%
+                                                                    endif %}>5:00PM</option>
+                                                                <option
+                                                                    value="0530PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0530PM"
+                                                                    %}selected{%
+                                                                    endif %}>5:30PM</option>
+                                                                <option
+                                                                    value="0600PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0600PM"
+                                                                    %}selected{%
+                                                                    endif %}>6:00PM</option>
+                                                                <option
+                                                                    value="0630PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0630PM"
+                                                                    %}selected{%
+                                                                    endif %}>6:30PM</option>
+                                                                <option
+                                                                    value="0700PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0700PM"
+                                                                    %}selected{%
+                                                                    endif %}>7:00PM</option>
+                                                                <option
+                                                                    value="0730PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0730PM"
+                                                                    %}selected{%
+                                                                    endif %}>7:30PM</option>
+                                                                <option
+                                                                    value="0800PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0800PM"
+                                                                    %}selected{%
+                                                                    endif %}>8:00PM</option>
+                                                                <option
+                                                                    value="0830PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0830PM"
+                                                                    %}selected{%
+                                                                    endif %}>8:30PM</option>
+                                                                <option
+                                                                    value="0900PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0900PM"
+                                                                    %}selected{%
+                                                                    endif %}>9:00PM</option>
+                                                                <option
+                                                                    value="0930PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "0930PM"
+                                                                    %}selected{%
+                                                                    endif %}>9:30PM</option>
+                                                                <option
+                                                                    value="1000PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1000PM"
+                                                                    %}selected{%
+                                                                    endif %}>10:00PM</option>
+                                                                <option
+                                                                    value="1030PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1030PM"
+                                                                    %}selected{%
+                                                                    endif %}>10:30PM</option>
+                                                                <option
+                                                                    value="1100PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1100PM"
+                                                                    %}selected{%
+                                                                    endif %}>11:00PM</option>
+                                                                <option
+                                                                    value="1130PM"
+                                                                    {% if
+                                                                    pickup_time
+                                                                    == "1130PM"
+                                                                    %}selected{%
+                                                                    endif %}>11:30PM</option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                
+                                                <div class="input-box" id="returnDateTimeField">
+                                                    <label class="label-text">Return Pick Up Time</label>
+                                                    <div class="form-group">
+                                                        <div
+                                                            class="select-contain w-auto">
+                                                            <select
+                                                                class="select-contain-select"
+                                                                name="return_pickup_time"
+                                                                id="return_pickup_time"
+                                                                >
+
+                                                                <option
+                                                                    value="1200AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1200AM"
+                                                                    %}selected{%
+                                                                    endif %}>12:00AM</option>
+                                                                <option
+                                                                    value="1230AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1230AM"
+                                                                    %}selected{%
+                                                                    endif %}>12:30AM</option>
+                                                                <option
+                                                                    value="0100AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0100AM"
+                                                                    %}selected{%
+                                                                    endif %}>1:00AM</option>
+                                                                <option
+                                                                    value="0130AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0130AM"
+                                                                    %}selected{%
+                                                                    endif %}>1:30AM</option>
+                                                                <option
+                                                                    value="0200AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0200AM"
+                                                                    %}selected{%
+                                                                    endif %}>2:00AM</option>
+                                                                <option
+                                                                    value="0230AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0230AM"
+                                                                    %}selected{%
+                                                                    endif %}>2:30AM</option>
+                                                                <option
+                                                                    value="0300AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0300AM"
+                                                                    %}selected{%
+                                                                    endif %}>3:00AM</option>
+                                                                <option
+                                                                    value="0330AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0330AM"
+                                                                    %}selected{%
+                                                                    endif %}>3:30AM</option>
+                                                                <option
+                                                                    value="0400AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0400AM"
+                                                                    %}selected{%
+                                                                    endif %}>4:00AM</option>
+                                                                <option
+                                                                    value="0430AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0430AM"
+                                                                    %}selected{%
+                                                                    endif %}>4:30AM</option>
+                                                                <option
+                                                                    value="0500AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0500AM"
+                                                                    %}selected{%
+                                                                    endif %}>5:00AM</option>
+                                                                <option
+                                                                    value="0530AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0530AM"
+                                                                    %}selected{%
+                                                                    endif %}>5:30AM</option>
+                                                                <option
+                                                                    value="0600AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0600AM"
+                                                                    %}selected{%
+                                                                    endif %}>6:00AM</option>
+                                                                <option
+                                                                    value="0630AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0630AM"
+                                                                    %}selected{%
+                                                                    endif %}>6:30AM</option>
+                                                                <option
+                                                                    value="0700AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0700AM"
+                                                                    %}selected{%
+                                                                    endif %}>7:00AM</option>
+                                                                <option
+                                                                    value="0730AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0730AM"
+                                                                    %}selected{%
+                                                                    endif %}>7:30AM</option>
+                                                                <option
+                                                                    value="0800AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0800AM"
+                                                                    %}selected{%
+                                                                    endif %}>8:00AM</option>
+                                                                <option
+                                                                    value="0830AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0830AM"
+                                                                    %}selected{%
+                                                                    endif %}>8:30AM</option>
+                                                                <option
+                                                                    value="0900AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0900AM"
+                                                                    %}selected{%
+                                                                    endif %}>9:00AM</option>
+                                                                <option
+                                                                    value="0930AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0930AM"
+                                                                    %}selected{%
+                                                                    endif %}>9:30AM</option>
+                                                                <option
+                                                                    value="1000AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1000AM"
+                                                                    %}selected{%
+                                                                    endif %}>10:00AM</option>
+                                                                <option
+                                                                    value="1030AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1030AM"
+                                                                    %}selected{%
+                                                                    endif %}>10:30AM</option>
+                                                                <option
+                                                                    value="1100AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1100AM"
+                                                                    %}selected{%
+                                                                    endif %}>11:00AM</option>
+                                                                <option
+                                                                    value="1130AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1130AM"
+                                                                    %}selected{%
+                                                                    endif %}>11:30AM</option>
+                                                                <option
+                                                                    value="1200PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1200PM"
+                                                                    %}selected{%
+                                                                    endif %}>12:00PM</option>
+                                                                <option
+                                                                    value="1230PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1230PM"
+                                                                    %}selected{%
+                                                                    endif %}>12:30PM</option>
+                                                                <option
+                                                                    value="0100PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0100PM"
+                                                                    %}selected{%
+                                                                    endif %}>1:00PM</option>
+                                                                <option
+                                                                    value="0130PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0130PM"
+                                                                    %}selected{%
+                                                                    endif %}>1:30PM</option>
+                                                                <option
+                                                                    value="0200PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0200PM"
+                                                                    %}selected{%
+                                                                    endif %}>2:00PM</option>
+                                                                <option
+                                                                    value="0230PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0230PM"
+                                                                    %}selected{%
+                                                                    endif %}>2:30PM</option>
+                                                                <option
+                                                                    value="0300PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0300PM"
+                                                                    %}selected{%
+                                                                    endif %}>3:00PM</option>
+                                                                <option
+                                                                    value="0330PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0330PM"
+                                                                    %}selected{%
+                                                                    endif %}>3:30PM</option>
+                                                                <option
+                                                                    value="0400PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0400PM"
+                                                                    %}selected{%
+                                                                    endif %}>4:00PM</option>
+                                                                <option
+                                                                    value="0430PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0430PM"
+                                                                    %}selected{%
+                                                                    endif %}>4:30PM</option>
+                                                                <option
+                                                                    value="0500PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0500PM"
+                                                                    %}selected{%
+                                                                    endif %}>5:00PM</option>
+                                                                <option
+                                                                    value="0530PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0530PM"
+                                                                    %}selected{%
+                                                                    endif %}>5:30PM</option>
+                                                                <option
+                                                                    value="0600PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0600PM"
+                                                                    %}selected{%
+                                                                    endif %}>6:00PM</option>
+                                                                <option
+                                                                    value="0630PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0630PM"
+                                                                    %}selected{%
+                                                                    endif %}>6:30PM</option>
+                                                                <option
+                                                                    value="0700PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0700PM"
+                                                                    %}selected{%
+                                                                    endif %}>7:00PM</option>
+                                                                <option
+                                                                    value="0730PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0730PM"
+                                                                    %}selected{%
+                                                                    endif %}>7:30PM</option>
+                                                                <option
+                                                                    value="0800PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0800PM"
+                                                                    %}selected{%
+                                                                    endif %}>8:00PM</option>
+                                                                <option
+                                                                    value="0830PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0830PM"
+                                                                    %}selected{%
+                                                                    endif %}>8:30PM</option>
+                                                                <option
+                                                                    value="0900PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0900PM"
+                                                                    %}selected{%
+                                                                    endif %}>9:00PM</option>
+                                                                <option
+                                                                    value="0930PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0930PM"
+                                                                    %}selected{%
+                                                                    endif %}>9:30PM</option>
+                                                                <option
+                                                                    value="1000PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1000PM"
+                                                                    %}selected{%
+                                                                    endif %}>10:00PM</option>
+                                                                <option
+                                                                    value="1030PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1030PM"
+                                                                    %}selected{%
+                                                                    endif %}>10:30PM</option>
+                                                                <option
+                                                                    value="1100PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1100PM"
+                                                                    %}selected{%
+                                                                    endif %}>11:00PM</option>
+                                                                <option
+                                                                    value="1130PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1130PM"
+                                                                    %}selected{%
+                                                                    endif %}>11:30PM</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="input-box">
+                                                    <label class="label-text">Drop-off
+                                                        to</label>
+                                                    <div class="form-group">
+                                                        <span
+                                                            class="la la-map-marker form-icon"></span>
+                                                        <input
+                                                            class="form-control destination"
+                                                            id="destination"
+                                                            name="destination"
+                                                            value="{% if destination != None %} {{destination}} {% endif %}"
+                                                            type="text"
+                                                            placeholder="Destination, city, or region" />
+                                                    </div>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label class="label-text">Drop-off
+                                                        Date</label>
+                                                    <div class="form-group">
+                                                        <span
+                                                            class="la la-calendar form-icon"></span>
+                                                        <input
+                                                            class="date-range form-control daterange-single"
+                                                            disabled
+                                                            value="{% if drop_off_date != None %} {{drop_off_date}} {% endif %}"
+                                                            id="drop-off_date"
+                                                            type="text"
+                                                            name="drop-off" />
+                                                    </div>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label class="label-text">Drop
+                                                        off Time</label>
+                                                    <div class="form-group">
+                                                        <div
+                                                            class="select-contain w-auto">
+                                                            <select
+                                                                class="select-contain-select"
+                                                                name="drop-off_time"
+                                                                id="drop-off_time"
+                                                                disabled>
+
+                                                                <option
+                                                                    value="1200AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1200AM"
+                                                                    %}selected{%
+                                                                    endif %}>12:00AM</option>
+                                                                <option
+                                                                    value="1230AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1230AM"
+                                                                    %}selected{%
+                                                                    endif %}>12:30AM</option>
+                                                                <option
+                                                                    value="0100AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0100AM"
+                                                                    %}selected{%
+                                                                    endif %}>1:00AM</option>
+                                                                <option
+                                                                    value="0130AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0130AM"
+                                                                    %}selected{%
+                                                                    endif %}>1:30AM</option>
+                                                                <option
+                                                                    value="0200AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0200AM"
+                                                                    %}selected{%
+                                                                    endif %}>2:00AM</option>
+                                                                <option
+                                                                    value="0230AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0230AM"
+                                                                    %}selected{%
+                                                                    endif %}>2:30AM</option>
+                                                                <option
+                                                                    value="0300AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0300AM"
+                                                                    %}selected{%
+                                                                    endif %}>3:00AM</option>
+                                                                <option
+                                                                    value="0330AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0330AM"
+                                                                    %}selected{%
+                                                                    endif %}>3:30AM</option>
+                                                                <option
+                                                                    value="0400AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0400AM"
+                                                                    %}selected{%
+                                                                    endif %}>4:00AM</option>
+                                                                <option
+                                                                    value="0430AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0430AM"
+                                                                    %}selected{%
+                                                                    endif %}>4:30AM</option>
+                                                                <option
+                                                                    value="0500AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0500AM"
+                                                                    %}selected{%
+                                                                    endif %}>5:00AM</option>
+                                                                <option
+                                                                    value="0530AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0530AM"
+                                                                    %}selected{%
+                                                                    endif %}>5:30AM</option>
+                                                                <option
+                                                                    value="0600AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0600AM"
+                                                                    %}selected{%
+                                                                    endif %}>6:00AM</option>
+                                                                <option
+                                                                    value="0630AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0630AM"
+                                                                    %}selected{%
+                                                                    endif %}>6:30AM</option>
+                                                                <option
+                                                                    value="0700AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0700AM"
+                                                                    %}selected{%
+                                                                    endif %}>7:00AM</option>
+                                                                <option
+                                                                    value="0730AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0730AM"
+                                                                    %}selected{%
+                                                                    endif %}>7:30AM</option>
+                                                                <option
+                                                                    value="0800AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0800AM"
+                                                                    %}selected{%
+                                                                    endif %}>8:00AM</option>
+                                                                <option
+                                                                    value="0830AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0830AM"
+                                                                    %}selected{%
+                                                                    endif %}>8:30AM</option>
+                                                                <option
+                                                                    value="0900AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0900AM"
+                                                                    %}selected{%
+                                                                    endif %}>9:00AM</option>
+                                                                <option
+                                                                    value="0930AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0930AM"
+                                                                    %}selected{%
+                                                                    endif %}>9:30AM</option>
+                                                                <option
+                                                                    value="1000AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1000AM"
+                                                                    %}selected{%
+                                                                    endif %}>10:00AM</option>
+                                                                <option
+                                                                    value="1030AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1030AM"
+                                                                    %}selected{%
+                                                                    endif %}>10:30AM</option>
+                                                                <option
+                                                                    value="1100AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1100AM"
+                                                                    %}selected{%
+                                                                    endif %}>11:00AM</option>
+                                                                <option
+                                                                    value="1130AM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1130AM"
+                                                                    %}selected{%
+                                                                    endif %}>11:30AM</option>
+                                                                <option
+                                                                    value="1200PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1200PM"
+                                                                    %}selected{%
+                                                                    endif %}>12:00PM</option>
+                                                                <option
+                                                                    value="1230PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1230PM"
+                                                                    %}selected{%
+                                                                    endif %}>12:30PM</option>
+                                                                <option
+                                                                    value="0100PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0100PM"
+                                                                    %}selected{%
+                                                                    endif %}>1:00PM</option>
+                                                                <option
+                                                                    value="0130PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0130PM"
+                                                                    %}selected{%
+                                                                    endif %}>1:30PM</option>
+                                                                <option
+                                                                    value="0200PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0200PM"
+                                                                    %}selected{%
+                                                                    endif %}>2:00PM</option>
+                                                                <option
+                                                                    value="0230PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0230PM"
+                                                                    %}selected{%
+                                                                    endif %}>2:30PM</option>
+                                                                <option
+                                                                    value="0300PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0300PM"
+                                                                    %}selected{%
+                                                                    endif %}>3:00PM</option>
+                                                                <option
+                                                                    value="0330PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0330PM"
+                                                                    %}selected{%
+                                                                    endif %}>3:30PM</option>
+                                                                <option
+                                                                    value="0400PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0400PM"
+                                                                    %}selected{%
+                                                                    endif %}>4:00PM</option>
+                                                                <option
+                                                                    value="0430PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0430PM"
+                                                                    %}selected{%
+                                                                    endif %}>4:30PM</option>
+                                                                <option
+                                                                    value="0500PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0500PM"
+                                                                    %}selected{%
+                                                                    endif %}>5:00PM</option>
+                                                                <option
+                                                                    value="0530PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0530PM"
+                                                                    %}selected{%
+                                                                    endif %}>5:30PM</option>
+                                                                <option
+                                                                    value="0600PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0600PM"
+                                                                    %}selected{%
+                                                                    endif %}>6:00PM</option>
+                                                                <option
+                                                                    value="0630PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0630PM"
+                                                                    %}selected{%
+                                                                    endif %}>6:30PM</option>
+                                                                <option
+                                                                    value="0700PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0700PM"
+                                                                    %}selected{%
+                                                                    endif %}>7:00PM</option>
+                                                                <option
+                                                                    value="0730PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0730PM"
+                                                                    %}selected{%
+                                                                    endif %}>7:30PM</option>
+                                                                <option
+                                                                    value="0800PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0800PM"
+                                                                    %}selected{%
+                                                                    endif %}>8:00PM</option>
+                                                                <option
+                                                                    value="0830PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0830PM"
+                                                                    %}selected{%
+                                                                    endif %}>8:30PM</option>
+                                                                <option
+                                                                    value="0900PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0900PM"
+                                                                    %}selected{%
+                                                                    endif %}>9:00PM</option>
+                                                                <option
+                                                                    value="0930PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "0930PM"
+                                                                    %}selected{%
+                                                                    endif %}>9:30PM</option>
+                                                                <option
+                                                                    value="1000PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1000PM"
+                                                                    %}selected{%
+                                                                    endif %}>10:00PM</option>
+                                                                <option
+                                                                    value="1030PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1030PM"
+                                                                    %}selected{%
+                                                                    endif %}>10:30PM</option>
+                                                                <option
+                                                                    value="1100PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1100PM"
+                                                                    %}selected{%
+                                                                    endif %}>11:00PM</option>
+                                                                <option
+                                                                    value="1130PM"
+                                                                    {% if
+                                                                    drop_off_time
+                                                                    == "1130PM"
+                                                                    %}selected{%
+                                                                    endif %}>11:30PM</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="input-box" id="input_box_return_date">
+                                                    <label class="label-text">Return
+                                                        Date(Optional)</label>
+                                                    <div class="form-group">
+                                                        <span
+                                                            class="la la-calendar form-icon"></span>
+                                                        <input
+                                                            class="date-range form-control daterange-single"
+                                                            value="{% if return_date != None %} {{return_date}} {% endif %}"
+                                                            id="return_date"
+                                                            type="text"
+                                                            name="drop-off" />
+                                                    </div>
+                                                </div>
+
+                                                
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <div id="map"
+                                                    style="height: 300px !important;"></div>
+                                                <div class="card">
+                                                    <div class="card-body row">
+                                                        <div class="col-lg-6 ">
+                                                            TOTAL DISTANCE
+                                                            <img
+                                                                src="{% static 'images/destination.png' %}"
+                                                                width=60,
+                                                                height=60 alt
+                                                                srcset> <span
+                                                                id="distance">0
+                                                                km</span>
+
+                                                        </div>
+
+                                                        <div class="col-lg-6">
+                                                            TOTAL TIME
+                                                            <img
+                                                                src="{% static 'images/clock.png' %}"
+                                                                width=60,
+                                                                height=60 alt
+                                                                srcset>
+                                                            <span
+                                                                id="total_time">0
+                                                                h 0 m</span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="filter-wrap margin-bottom-30px">
+                    <div
+                        class="filter-top d-flex align-items-center justify-content-between pb-4">
+                        <div>
+                            <h3 class="title font-size-24">Select Bus from Below
+                                list and Continue</h3>
+                            <p class="font-size-14"><span class="mr-1 pt-1">Book
+                                    with confidence:</span>No bus booking fees</p>
+                        </div>
+
+                    </div><!-- end filter-top -->
+                    <div
+                        class="filter-bar d-flex align-items-center justify-content-between">
+                        <div
+                            class="filter-bar-filter d-flex flex-wrap align-items-center">
+                            <div class="filter-option">
+                                <h3 class="title font-size-16">Filter by:</h3>
+                            </div>
+                            <div class="filter-option">
+                                <div class="dropdown dropdown-contain">
+                                    <a
+                                        class="dropdown-toggle dropdown-btn dropdown--btn"
+                                        href="#" role="button"
+                                        data-toggle="dropdown">
+                                        Filter Price
+                                    </a>
+                                    <div
+                                        class="dropdown-menu dropdown-menu-wrap">
+                                        <div class="dropdown-item">
+                                            <div class="slider-range-wrap">
+                                                <div
+                                                    class="price-slider-amount padding-bottom-20px">
+                                                    <label for="amount"
+                                                        class="filter__label">Price:</label>
+                                                    <input type="text"
+                                                        id="amount"
+                                                        class="amounts">
+                                                </div><!-- end price-slider-amount -->
+                                                <div id="slider-range"></div><!-- end slider-range -->
+                                            </div><!-- end slider-range-wrap -->
+                                            <div class="btn-box pt-4">
+                                                <button
+                                                    class="theme-btn theme-btn-small theme-btn-transparent"
+                                                    type="button"
+                                                    onclick="filter_items()">Apply</button>
+                                            </div>
+                                        </div><!-- end dropdown-item -->
+                                    </div><!-- end dropdown-menu -->
+                                </div><!-- end dropdown -->
+                            </div>
+
+                            <div class="filter-option">
+                                <div class="dropdown dropdown-contain">
+                                    <a
+                                        class="dropdown-toggle dropdown-btn dropdown--btn"
+                                        href="#" role="button"
+                                        data-toggle="dropdown">
+                                        Seating Capacity
+                                    </a>
+                                    <div
+                                        class="dropdown-menu dropdown-menu-wrap">
+                                        <div class="dropdown-item">
+                                            <div class="slider-range-wrap">
+                                                <div
+                                                    class="price-slider-amount padding-bottom-20px">
+                                                    <label for="amount"
+                                                        class="filter__label">Seating
+                                                        Capacity</label>
+                                                    <input type="text"
+                                                        id="amount2"
+                                                        class="amounts" />
+                                                </div>
+                                                <!-- end price-slider-amount -->
+                                                <div id="slider-range2"
+                                                    class="slider-range"></div>
+                                                <!-- end slider-range -->
+                                            </div>
+                                            <div class="btn-box pt-4">
+                                                <button
+                                                    class="theme-btn theme-btn-small theme-btn-transparent"
+                                                    type="button"
+                                                    onclick="filter_items()">Apply</button>
+                                            </div>
+                                        </div><!-- end dropdown-item -->
+                                    </div><!-- end dropdown-menu -->
+                                </div><!-- end dropdown -->
+                            </div>
+                            <div class="filter-option">
+                                <div class="select-contain">
+                                    <select class="select-contain-select"
+                                        id="filter_by" onchange="filter_items()">
+                                        <option value="1">Short by default</option>
+                                        <option value="2">New Bus</option>
+                                        <option value="3">Popular Bus</option>
+                                        <option value="4">Bestseller Bus</option>
+                                        <!-- New filter: Bestseller Bus -->
+                                        <option value="5">Featured Bus</option>
+                                        <!-- New filter: Bestseller Bus -->
+                                        <option value="6">Price: low to high</option>
+                                        <option value="7">Price: high to low</option>
+                                        <option value="8">A to Z</option>
+                                        <option value="9">Z to A</option>
+                                        <!-- New filter: Z to A -->
+                                    </select>
+                                </div>
+                                <!-- end select-contain -->
+                            </div>
+
+                        </div><!-- end filter-bar-filter -->
+                        <div class="filter-option">
+
+                            <div class="btn-box pt-2">
+                                <button type="button" class="theme-btn"
+                                    >Save Trip Information</button>
+                            </div>
+
+                            <!-- end select-contain -->
+                        </div>
+                    </div><!-- end filter-bar -->
+                </div><!-- end filter-wrap -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+
+        <div class="row " id="buses_list">
+            {% for bus in buses %}
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item car-card">
+                    <div class="card-img">
+                        <a href="#" class="d-block">
+                            <img src="media/{{bus.bus_logo}}" alt="car-img">
+                        </a>
+                        <span class="badge">{{bus.tag}}</span>
+                        <div class="add-to-wishlist icon-element"
+                            data-toggle="tooltip" data-placement="top"
+                            title="Save for later">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-meta">{{bus.company_name}}</p>
+                        <h3 class="card-title"><a href="#">{{bus.name}}</a></h3>
+
+                        <div class="card-attributes">
+                            <ul class="d-flex align-items-center">
+                                <li class="d-flex align-items-center"
+                                    data-toggle="tooltip" data-placement="top"
+                                    title="Passenger"><i class="la la-users"></i><span>{{bus.number_seats}}</span></li>
+                                <li class="d-flex align-items-center"
+                                    data-toggle="tooltip" data-placement="top"
+                                    title="Luggage"><i class="la la-suitcase"></i><span>{{bus.luggage_capacity}}
+                                        Kg</span></li>
+                            </ul>
+                        </div>
+                        <div
+                            class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">From</span>
+                                <span class="price__num">${{bus.per_scale_charges}}</span>
+                                <span class="price__text">Per {{bus.scale}}</span>
+                            </p>
+                            <a href="#" class="btn-text">See
+                                details<i class="la la-angle-right"></i></a>
+                        </div>
+                        <br>
+                        <button
+                            class="btn btn-primary btn-icon btn-icon-left busButton"
+                            id="busButton{{bus.id}}"
+                            onclick="handleBusButtonClick('{{bus.id}}')">
+                            <i class="la la-check-circle" style="display: none;"></i>
+                            Select Bus
+                        </button>
+
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            {% endfor %}
+
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end booking-area -->
+{% endblock body %}
+
+{% block script %}
+<script>
+    function filter_items() {
+
+
+        var amount = $("#amount").val();
+        var seating_capacity = $("#amount2").val();
+        var filter_by = $("#filter_by").val();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/booking/get_more_buses",
+            data: {
+                amount: amount,
+                seating_capacity: seating_capacity,
+                filter_by: filter_by,
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            success: function (data) {
+
+                $("#buses_list").html(data["data"])
+
+
+
+            }
+        });
+
+
+    }
+
+</script>
+<script>
+
+    function handleBusButtonClick(busId) {
+        const button = document.getElementById('busButton' + busId);
+        const buttons = document.querySelectorAll('[id^="busButton"]');
+        const hiddenInput = document.getElementById('selectedBusIds');
+        const card = button.closest('.card-item');
+    
+        buttons.forEach((button) => {
+            button.classList.remove('selected');
+            button.getElementsByTagName('i')[0].style.display = 'none'; // Hide the check icon
+            const card = button.closest('.card-item');
+            card.style.border = '1px solid #ccc'; // Remove the border from all cards
+        });
+    
+        if (!button.classList.contains('selected')) {
+            hiddenInput.value = busId;
+            button.classList.add('selected');
+            button.getElementsByTagName('i')[0].style.display = 'inline'; // Show the check icon
+            card.style.border = '3px solid blue'; // Add the border to the selected card
+        } else {
+            // Clear the hidden input value and remove selection style
+            hiddenInput.value = '';
+            button.classList.remove('selected');
+            button.getElementsByTagName('i')[0].style.display = 'none'; // Hide the check icon
+        }
+    }  
+    
+</script>
+
+<script src="{% static 'js/google_map.js' %}"></script>
+
+<script>
+    function add_trip()
+    {
+
+
+        const pickup = $('#pickup').val();
+
+
+        const pickup_lat = $('#pickup_lat').val();
+        const pickup_long = $('#pickup_long').val();
+
+        const pickup_time = $('#pickup_time').val();
+        const pickup_date = $('#pickup_date').val();
+
+        const drop_off_time = $('#drop-off_time').val();
+
+        const drop_off_date = $('#drop-off_date').val();
+
+
+        const destination = $('#destination').val();
+        const destination_lat = $('#destination_lat').val();
+        const destination_long = $('#destination_long').val();
+
+        const return_date = $('#return_date').val();
+
+        const total_time = $('#total_time').html();
+        const total_distance = $('#distance').html();
+        const selectedBusIds = $('#selectedBusIds').val();
+        const return_pickup_time = $('#return_pickup_time').val();
+        const total_distance_in_number = $('#total_distance_in_number').val();
+
+        const trip_type =  $('#trip_type').val();;
+
+        if(pickup=== undefined || pickup === "")
+       {
+        Notifications("Please Select Pick-up Location","error");
+        return;
+       }
+       if(destination=== undefined || destination === "")
+       {
+        Notifications("Please Select Destination Location","error");
+        return;
+       }
+       
+       if(selectedBusIds=== undefined || selectedBusIds === "")
+       {
+        Notifications("Please Select a Bus","error");
+        return;
+       }
+
+       data={
+            "pickup":pickup,
+            "pickup_date":pickup_date,
+            "pickup_lat":pickup_lat,
+            "pickup_long":pickup_long,
+            "pickup_time":pickup_time,
+            "destination":destination,
+            "destination_lat":destination_lat,
+            "destination_long":destination_long,
+            "return_date":return_date,
+            "drop_off_date":drop_off_date,
+            "drop_off_time":drop_off_time,
+            "estimated_time":total_time,
+            "total_distance":total_distance,
+            "selectedBusIds":selectedBusIds,
+            "return_pickup_time":return_pickup_time,
+            "trip_type":trip_type,
+            "total_distance_in_number":total_distance_in_number,
+            "csrfmiddlewaretoken":'{{ csrf_token }}',
+        }
+       
+       $.ajax({
+            type: "POST",
+            url: "/api/add-trip",
+            dataType: "json",
+            data:data,
+        success: function (data) {
+            window.location=`${currentUrl}/confirm-booking/${data["id"]}`
+        },
+        error: function (xhr, status, error) {
+                res = xhr.responseJSON
+                if (Array.isArray(res)) {
+                  res.forEach(function(error) {
+                    Notifications(error, "error");
+                  });
+                } else {
+                  Notifications("Something went wrong", "error");
+                }
+            }
+
+
+  });
+       
+      
+      
+        
+
+        
+        
+      
+
+
+
+
+    }
+// Assuming your pickup time and date input elements have IDs "pickup_time" and "pickup_date", respectively
+document.getElementById("pickup_time").addEventListener("change", updateDropOffTimeAndDate);
+
+
+ document.getElementById("pickup").addEventListener("change", add_route_get_distance);
+document.getElementById("destination").addEventListener("change", add_route_get_distance);
+document.getElementById("pickup").addEventListener("keypress", handleKeyPress);
+document.getElementById("destination").addEventListener("keypress", handleKeyPress);
+
+    function handleKeyPress(event) {
+        
+  // Check if the pressed key is the "Enter" key (keycode 13)
+  if (event.keyCode === 13) {
+    // Trigger the add_route_get_distance() function when "Enter" key is pressed
+    add_route_get_distance();
+  }
+}
+   setTimeout(function() {
+    add_route_get_distance();
+  }, 2000);
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const oneWayRadio = document.getElementById('one-way-tab');
+        const roundTripRadio = document.getElementById('round-trip-tab');
+        const returnDateTimeField = document.getElementById('returnDateTimeField');
+        const returnDateTimeInput = document.getElementById('input_box_return_date');
+        const trip_type = document.getElementById('trip_type');
+       
+
+        function toggleReturnField() {
+            
+            if("{{trip_type}}" == "2" )
+            {
+                returnDateTimeField.style.display = 'block';
+                returnDateTimeInput.style.display = 'block';
+                roundTripRadio.classList.add("active")
+                oneWayRadio.classList.remove("active")
+                trip_type.value = 2;
+            }
+            else{
+                returnDateTimeField.style.display = 'none';
+                returnDateTimeInput.style.display = 'none';
+                trip_type.value = 1;
+                oneWayRadio.classList.add("active")
+                roundTripRadio.classList.remove("active")
+            }
+           
+        }
+    
+        oneWayRadio.addEventListener('click', function(){
+            returnDateTimeField.style.display = 'none';
+            returnDateTimeInput.style.display = 'none';
+            trip_type.value = 1;
+           
+
+        });
+        roundTripRadio.addEventListener('click', function (){
+            returnDateTimeField.style.display = 'block';
+                returnDateTimeInput.style.display = 'block';
+                trip_type.value = 2;
+                
+        });
+    
+        // Call the function on page load to set the initial state based on the default active radio button.
+        toggleReturnField();
+    });
+    
+
+</script>
+
+
+{% endblock script %}

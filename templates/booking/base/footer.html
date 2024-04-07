@@ -1,0 +1,64 @@
+
+{% load static %}
+
+
+
+
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/daterangepicker.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.countTo.min.js' %}"></script>
+<script src="{% static 'js/animated-headline.js' %}"></script>
+<script src="{% static 'js/jquery.ripples-min.js' %}"></script>
+<script src="{% static 'js/quantity-input.js' %}"></script>
+<script src="{% static 'js/jquery.autocomplete.js' %}"></script>
+<script src="{% static 'js/autocomplete-script.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'crm/toast/toast.js' %}"></script>
+<script src="{% static 'crm/toast/bootstrap-notify.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-toaster@4.0.1/js/bootstrap-toaster.min.js"></script>
+
+
+<script>
+
+$(".black_delete_modals").prependTo("body");
+
+    function Notifications(msg, color,title="Alert") {
+
+        hash_map = {
+            "success":TOAST_STATUS.SUCCESS,
+            "warning":TOAST_STATUS.DANGER,
+            "info":TOAST_STATUS.INFO,
+            "error":TOAST_STATUS.DANGER,
+
+        }
+
+        demo.showNotification(msg, color);
+
+    }
+    
+
+
+  </script>
+
+
+  {% if messages %}
+
+    {% for message in messages %}
+    <script>
+
+        Notifications("{{ message }}", "{{ message.tags }}"  )
+    </script>
+    {% endfor %}
+{% endif %}

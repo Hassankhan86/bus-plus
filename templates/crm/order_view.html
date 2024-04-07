@@ -1,0 +1,241 @@
+{% extends "crm/base/base.html" %}
+{% load static %}
+<style>
+    .warning{
+
+    background-color: #c2be1c !important;
+    border-color: #c2be1c !important;
+    }
+
+</style>
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+
+{% endblock style %}
+
+{% block content %}
+
+<!-- ================================
+    START PAYMENT AREA
+================================= -->
+<section class="payment-area section-bg section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-box payment-received-wrap mb-0">
+                    <div class="form-title-wrap">
+                        <div class="step-bar-wrap text-center">
+                            <ul class="step-bar-list d-flex align-items-center justify-content-around">
+                                {% for status in order.get_order_progress %}
+                                	<li class="step-bar flex-grow-1 {{status.class }}">
+                                    <span class="icon-element ">1</span>
+                                    <p class="pt-2 color-text-2">{{ status.text }}</p>
+                                </li>
+                                {% endfor %}
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="payment-received-list">
+                                    <h3 class="title font-size-24">Order Details</h3>
+
+                                    <ul class="list-items list-items-2 py-3">
+                                        <li><span>Pickup: </span>{{ order.trip.get_pickup}}</li>
+                                        <li><span>Destination: </span>{{ order.trip.get_destination}}</li>
+                                        <li><span>Stops: </span>{{ order.trip.get_total_stops }}</li>
+                                        <li><span>Total Passengers:</span>{{ order.trip.get_total_passengers }}</li>
+
+                                        <li><span>Round Trip :</span> {% if order.trip.is_two_way_trip %}
+                                            Yes
+                                        	{% else %}
+                                            No
+                                        {% endif %}  </li>
+                                        <li><span>Is Driver Required:</span> {% if order.trip.is_driver_required %}
+                                            Yes
+                                        	{% else %}
+                                            No
+                                        {% endif %}  </li>
+
+                                    </ul>
+                                </div><!-- end card-item -->
+
+                            </div><!-- end col-lg-6 -->
+                            <div class="col-lg-6">
+                                <div class="card-item card-item-list payment-received-card">
+                                    <div class="card-img">
+                                        <img src="/media/{{ order.trip.bus.bus_logo }}" alt="hotel-img">
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{ order.trip.bus.name}}</h3>
+                                        <div class="card-price pb-3">
+
+                                            <span class="price__num">${{ order.trip.per_scale_charges}}</span>
+                                            <span class="price__text">Per {{ order.trip.scale}}</span>
+                                        </div>
+                                        <div class="section-block"></div>
+                                        <p class="card-text pt-3">Bus tax {{ order.trip.get_tax_charge}}% not included, Service charge ${{ order.trip.get_service_charge }} not included</p>
+                                    </div>
+                                </div><!-- end card-item -->
+                            </div><!-- end col-lg-6 -->
+                        </div><!-- end row -->
+                         <div class="row">
+                            <div class="col-lg-6">
+
+                                <div class="payment-received-list">
+                                    <div class="card-item card-item-list payment-received-card">
+                                    <div class="card-body">
+                                         <div class="card-img">
+                                        <img src="/media/{{ order.trip.get_identity_card_image }}" alt="hotel-img" style="height: 150px;">
+                                    </div>
+                                    </div>
+                                </div><!-- end card-item -->
+                                    <h3 class="title">Received</h3>
+                                    <p>Thank you. Your order has been received</p>
+                                    <div class="table-form table-responsive pt-3 pb-3">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Order</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row">{{ order.order_id }}</th>
+                                                <td>
+                                                    <div class="table-content">
+                                                        <h3 class="title">{{ order.created_at}}</h3>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="table-content">
+                                                        <h3 class="title">${{ order.grand_total }}</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p>Make your payment derectly into our bank account. Please ues your Order ID as the payment reference. Your order wont be confirmed until the funds have cleared in our account</p>
+                                </div><!-- end card-item -->
+                            </div><!-- end col-lg-6 -->
+                            <div class="col-lg-6">
+                                <div class="payment-received-list">
+                                    <h3 class="title">Payment Detail</h3>
+                                    <div class="table-form table-layout-2 table-responsive pt-3">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Details</th>
+                                                <th scope="col" class="text-right">Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="table-content">
+                                                        <p class="title">Trip Insurances</p>
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="table-content text-right">
+                                                        <h3 class="title color-text">${{ order.trip.get_insurance_premium }}</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="table-content">
+                                                        <p class="title pb-2">Stops Charges</p>
+
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="table-content text-right">
+                                                        <h3 class="title color-text">${{ order.trip.get_routes_stop_charges_price }}</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="table-content">
+                                                        <p class="title">Service Charge</p>
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="table-content text-right">
+                                                        <h3 class="title color-text">${{ order.trip.get_service_charge }}</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="table-content">
+                                                        <p class="title">Sub Total</p>
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="table-content text-right">
+                                                        <h3 class="title color-text">${{ order.sub_total }}</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="table-content">
+                                                        <p class="title">Discount</p>
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="table-content text-right">
+                                                        <h3 class="title color-text">${{ order.discount }}</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="table-content">
+                                                        <p class="title">Grand Total</p>
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="table-content text-right">
+                                                        <h3 class="title color-text">${{ order.grand_total }}</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!-- end card-item -->
+                            </div><!-- end col-lg-6 -->
+                             <div class="col-lg-12">
+                                 <div class="section-block mt-3"></div>
+                                 <div class="btn-box text-center pt-4">
+                                     <a href="{% url 'orders' %}" class="theme-btn">Back to Orders</a>
+                                 </div>
+                             </div>
+                        </div><!-- end row -->
+                    </div>
+                </div><!-- end payment-card -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>
+<!-- ================================
+    END PAYMENT AREA
+================================= -->
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}
+

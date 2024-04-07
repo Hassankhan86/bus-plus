@@ -1,0 +1,139 @@
+{% extends 'booking/base/base.html' %}
+{% load static %}
+{% block style %}
+
+
+{% endblock style %}
+
+{% block body %}
+ <!-- end modal-shared -->
+ <div class="faq-area section-bg padding-top-100px padding-bottom-60px"> 
+    <div
+      class="container"
+      
+    >
+    <form action="" method="post">
+      {% csrf_token %}
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title title" id="exampleModalLongTitle2">
+                Login
+              </h5>
+              <p class="font-size-14">Hello! Welcome to your account</p>
+            </div>
+            
+          </div>
+          <div class="modal-body">
+            <div class="contact-form-action">
+              <form method="post">
+                <div class="input-box">
+                  <label class="label-text">Username</label>
+                  <div class="form-group">
+                    <span class="la la-user form-icon"></span>
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="username"
+                      id="#login-username"
+                      placeholder="Type your username"
+                    />
+                  </div>
+                  {% if form.username.errors %}
+                  <ul class="errorlist">
+                      {% for error in form.username.errors %}
+                          <li style="color:red;">{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+                </div>
+                <!-- end input-box -->
+                <div class="input-box">
+                  <label class="label-text">Password</label>
+                  <div class="form-group mb-2">
+                    <span class="la la-lock form-icon"></span>
+                    <input
+                      class="form-control"
+                      type="password"
+                      id="#login-password"
+                      name="password"
+                      placeholder="Type your password"
+                    />
+                  </div>
+                  {% if form.password.errors %}
+                  <ul class="errorlist">
+                      {% for error in form.password.errors %}
+                          <li style="color:red;">{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="custom-checkbox mb-0">
+                      <input type="checkbox" id="rememberchb" name="rememberchb" />
+                      <label for="rememberchb">Remember me</label>
+                    </div>
+                    <p class="forgot-password">
+                      <a href="{% url 'send-email' %}">Forgot Password?</a>
+                    </p>
+                  </div>
+                </div>
+                <!-- end input-box -->
+                <div class="btn-box pt-3 pb-4">
+                  <button
+                  type="submit"
+                    class="theme-btn w-100"
+                  >
+                    Login Account
+                  </button>
+                </div>
+
+              </form>
+            </div>
+            <!-- end contact-form-action -->
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3"></div>
+      
+    </div>  
+    </form>  
+      </div>
+    </div>
+  </div>
+  <!-- end modal-popup -->
+
+{% endblock body %}
+
+{% block script %}
+<!-- <script>
+  function ajaxLogin() {
+    var username = $("#login-username").val();
+    var password = $("#login-password").val();
+    debugger;
+    $.ajax({
+      type: "POST",
+      url: "/login/",
+      data: {
+        username: username,
+        password: password,
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+      },
+      success: function (data) {
+        if (data.success) {
+          // Redirect or handle successful login
+          window.location.replace("/"); // Redirect to home page
+        } else {
+          // Show error message
+          Notoifications("Invalid Username  or  password","error")
+        }
+      },
+    });
+  }
+</script> -->
+{% endblock script %}

@@ -1,0 +1,108 @@
+{% extends "crm/base/base.html" %}
+
+{% load static %} 
+
+{% block style %} 
+
+{% endblock style %}
+
+{% block content %}
+
+<section class="booking-area padding-top150px padding-bottom-70px">
+  <div class="row" style="padding-top: 100px">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        
+        <div class="card-body">
+          <!-- HTML form for adding bus data -->
+          <center><h2>Add FAQ</h2></center>
+         
+
+          <form action="" method="post">
+            {% csrf_token %}
+          
+            <div class="mb-3">
+              <label for="type" class="form-label">Category</label>
+
+              {{ form.type }}
+              
+            </div>
+          
+            <div class="mb-3">
+              <label for="question" class="form-label">Question</label>
+              {{ form.question }}
+            </div>
+          
+            <div class="mb-3">
+              <label for="answer" class="form-label">Answer</label>
+              {{ form.answer }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add FAQ</button>
+        {#         <a href="{% url 'add-faq-category' %}" class="btn btn-primary">Add Category</a>#}
+            <button type="button" id="addCategoryButton" class="btn btn-success">Add FAQ Category</button>
+          </form>
+          
+        </div>
+       
+      </div>
+    </div>
+    <div  class="col-lg-2"></div>
+  </div>
+
+
+  <!-- Modal for adding FAQ category -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCategoryModalLabel">Add FAQ Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+         <form action="{% url 'add-faq-category' %}" method="post" id="categoryForm">
+      <div class="modal-body">
+        <!-- Category form goes here -->
+
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="categoryName" class="form-label">Category Name</label>
+           {{faq_category.type}}
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="saveCategoryButton" type="submit" class="btn btn-primary" >Save Category</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+</section>
+
+{% endblock content%} {% block scripts %} 
+
+
+
+  <script>
+    // Wait for the document to be ready
+    document.addEventListener("DOMContentLoaded", function() {
+      // Get references to the button and modal
+      const addCategoryButton = document.getElementById("addCategoryButton");
+      const addCategoryModal = new bootstrap.Modal(document.getElementById("addCategoryModal"));
+  
+      // Show the modal when the button is clicked
+      addCategoryButton.addEventListener("click", function() {
+        addCategoryModal.show();
+      });
+  
+      // Handle saving category data when the modal save button is clicked
+
+    });
+  </script>
+  
+
+{% endblock scripts %}

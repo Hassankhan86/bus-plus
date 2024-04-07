@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+
+        <meta charset="utf-8" />
+        <title>Dashboard | Buses Plus</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Bues Plus Admin dashboard" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <!-- App favicon -->
+        <link rel="icon" href="{% static 'images/Bus Only.svg' %}" />
+
+        <!-- Bootstrap Css -->
+    {% include 'crm/base/includes/header_links.html' %}
+ {% block style %}
+
+                {% endblock style%}
+
+    </head>
+
+    <body data-sidebar="dark" data-layout-mode="light">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+                {% include 'crm/base/includes/header.html' %}
+                {% include 'crm/base/includes/sidebar.html' %}
+     <div class="main-content">
+                {% block content %}
+               
+                {% endblock content%}
+
+            {% include 'crm/base/includes/footer.html' %}
+     </div>
+
+
+        </div>
+    {% include 'crm/base/includes/scripts.html' %}
+
+ {% block scripts %}
+
+     {% endblock scripts %}
+
+<script>
+
+
+
+    function Notifications(msg, color,title="Alert") {
+        hash_map = {
+            "success":TOAST_STATUS.SUCCESS,
+            "warning":TOAST_STATUS.DANGER,
+            "info":TOAST_STATUS.INFO,
+            "error":TOAST_STATUS.DANGER,
+
+        }
+
+        demo.showNotification(msg, color);
+
+    }
+
+
+
+  </script>
+
+
+  {% if messages %}
+
+    {% for message in messages %}
+    <script>
+
+        Notifications("{{ message }}", "{{ message.tags }}"  )
+    </script>
+    {% endfor %}
+{% endif %}
+<script>
+     const server_url = `${window.location.protocol}//${window.location.host}`;
+</script>
+    </body>
+
+
+</html>

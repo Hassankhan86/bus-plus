@@ -1,0 +1,249 @@
+<div id="buses_list_view">
+<div class="row"  style="">
+            <div class="col-lg-12">
+                <div class="filter-wrap margin-bottom-30px">
+                    <div
+                        class="filter-top d-flex align-items-center justify-content-between pb-4">
+                        <div>
+                            <h3 class="title font-size-24">Select Bus from Below
+                                list and Continue</h3>
+                            <p class="font-size-14"><span class="mr-1 pt-1">Book
+                                    with confidence:</span>No bus booking fees</p>
+                        </div>
+
+                    </div><!-- end filter-top -->
+                    <div
+                        class="filter-bar d-flex align-items-center justify-content-between">
+                        <div
+                            class="filter-bar-filter d-flex flex-wrap align-items-center">
+                            <div class="filter-option">
+                                <h3 class="title font-size-16">Filter by:</h3>
+                            </div>
+                            <div class="filter-option">
+                                <div class="dropdown dropdown-contain">
+                                    <a
+                                        class="dropdown-toggle dropdown-btn dropdown--btn"
+                                        href="#" role="button"
+                                        data-toggle="dropdown">
+                                        Filter Price
+                                    </a>
+                                    <div
+                                        class="dropdown-menu dropdown-menu-wrap">
+                                        <div class="dropdown-item">
+                                            <div class="slider-range-wrap">
+                                                <div
+                                                    class="price-slider-amount padding-bottom-20px">
+                                                    <label for="amount"
+                                                        class="filter__label">Price:</label>
+                                                    <input type="text"
+                                                        id="amount"
+                                                        class="amounts">
+                                                </div><!-- end price-slider-amount -->
+                                                <div id="slider-range"></div><!-- end slider-range -->
+                                            </div><!-- end slider-range-wrap -->
+                                            <div class="btn-box pt-4">
+                                                <button
+                                                    class="theme-btn theme-btn-small theme-btn-transparent"
+                                                    type="button"
+                                                    onclick="filter_items()">Apply</button>
+                                            </div>
+                                        </div><!-- end dropdown-item -->
+                                    </div><!-- end dropdown-menu -->
+                                </div><!-- end dropdown -->
+                            </div>
+
+                            <div class="filter-option">
+                                <div class="dropdown dropdown-contain">
+                                    <a
+                                        class="dropdown-toggle dropdown-btn dropdown--btn"
+                                        href="#" role="button"
+                                        data-toggle="dropdown">
+                                        Seating Capacity
+                                    </a>
+                                    <div
+                                        class="dropdown-menu dropdown-menu-wrap">
+                                        <div class="dropdown-item">
+                                            <div class="slider-range-wrap">
+                                                <div
+                                                    class="price-slider-amount padding-bottom-20px">
+                                                    <label for="amount"
+                                                        class="filter__label">Seating
+                                                        Capacity</label>
+                                                    <input type="text"
+                                                        id="amount2"
+                                                        class="amounts" />
+                                                </div>
+                                                <!-- end price-slider-amount -->
+                                                <div id="slider-range2"
+                                                    class="slider-range"></div>
+                                                <!-- end slider-range -->
+                                            </div>
+                                            <div class="btn-box pt-4">
+                                                <button
+                                                    class="theme-btn theme-btn-small theme-btn-transparent"
+                                                    type="button"
+                                                    onclick="filter_items()">Apply</button>
+                                            </div>
+                                        </div><!-- end dropdown-item -->
+                                    </div><!-- end dropdown-menu -->
+                                </div><!-- end dropdown -->
+                            </div>
+                            <div class="filter-option">
+                                <div class="select-contain">
+                                    <select class="select-contain-select"
+                                        id="filter_by" onchange="filter_items()">
+                                        <option value="1">Short by default</option>
+                                        <option value="2">New Bus</option>
+                                        <option value="3">Popular Bus</option>
+                                        <option value="4">Bestseller Bus</option>
+                                        <!-- New filter: Bestseller Bus -->
+                                        <option value="5">Featured Bus</option>
+                                        <!-- New filter: Bestseller Bus -->
+                                        <option value="6">Price: low to high</option>
+                                        <option value="7">Price: high to low</option>
+                                        <option value="8">A to Z</option>
+                                        <option value="9">Z to A</option>
+                                        <!-- New filter: Z to A -->
+                                    </select>
+                                </div>
+                                <!-- end select-contain -->
+                            </div>
+
+                        </div><!-- end filter-bar-filter -->
+                        <div class="filter-option">
+
+                            {% if show_buses %}
+                                <div class="btn-box pt-2">
+                                <button type="button" class="theme-btn"
+                                    onclick="add_trip()">Continue</button>
+                            </div>
+                            {% endif %}
+
+                            <!-- end select-contain -->
+                        </div>
+                    </div><!-- end filter-bar -->
+                </div><!-- end filter-wrap -->
+            </div><!-- end col-lg-12 -->
+        </div>
+
+<div class="row " id="buses_list">
+            {% for bus in buses %}
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item car-card">
+                    <div class="card-img">
+
+                            <img src="media/{{bus.bus_logo}}">
+
+                        <span class="badge">{{bus.tag}}</span>
+                        <div class="add-to-wishlist icon-element"
+                            data-toggle="tooltip" data-placement="top"
+                            title="Save for later">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-meta">{{bus.company_name}}</p>
+                        <h3 class="card-title"><a href="#">{{bus.name}}</a></h3>
+                        <div>
+                Self Drive Available: {% if bus.self_drive_available %} Yes {% else %} No {% endif %}
+            </div>
+
+                        <div class="card-attributes">
+                            <ul class="d-flex align-items-center">
+                                <li class="d-flex align-items-center"
+                                    data-toggle="tooltip" data-placement="top"
+                                    title="Passenger"><i class="la la-users"></i><span>{{bus.number_seats}}</span></li>
+                                <li class="d-flex align-items-center"
+                                    data-toggle="tooltip" data-placement="top"
+                                    title="Luggage"><i class="la la-suitcase"></i><span>{{bus.luggage_capacity}}
+                                        Kg</span></li>
+                            </ul>
+                        </div>
+                 {% for charge in bus.bus_charges.all %}
+                        <div
+                            class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">From:</span>
+                                <span class="price__num">${{charge.per_scale_charges}}</span>
+                                <span class="price__text">Per {{charge.scale}}</span>
+                            </p>
+
+
+                        </div>
+
+                      {% endfor %}
+                        <button
+                            class="btn btn-primary btn-icon btn-icon-left busButton"
+                            id="busButton{{bus.id}}"
+                            onclick="handleBusButtonClick('{{bus.id}}')">
+                            <i class="la la-check-circle" style="display: none;"></i>
+                            Select Bus
+                        </button>
+
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            {% endfor %}
+
+        </div>
+</div>
+
+<script>
+    function filter_items() {
+
+
+        var amount = $("#amount").val();
+        var seating_capacity = $("#amount2").val();
+        var filter_by = $("#filter_by").val();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/booking/get_more_buses",
+            data: {
+                amount: amount,
+                seating_capacity: seating_capacity,
+                filter_by: filter_by,
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            success: function (data) {
+
+                $("#buses_list").html(data["data"])
+
+
+
+            }
+        });
+
+
+    }
+
+
+
+    function handleBusButtonClick(busId) {
+        const button = document.getElementById('busButton' + busId);
+        const buttons = document.querySelectorAll('[id^="busButton"]');
+        const hiddenInput = document.getElementById('selectedBusIds');
+        const card = button.closest('.card-item');
+
+        buttons.forEach((button) => {
+            button.classList.remove('selected');
+            button.getElementsByTagName('i')[0].style.display = 'none'; // Hide the check icon
+            const card = button.closest('.card-item');
+            card.style.border = '1px solid #ccc'; // Remove the border from all cards
+        });
+
+        if (!button.classList.contains('selected')) {
+            hiddenInput.value = busId;
+            button.classList.add('selected');
+            button.getElementsByTagName('i')[0].style.display = 'inline'; // Show the check icon
+            card.style.border = '3px solid blue'; // Add the border to the selected card
+        } else {
+            // Clear the hidden input value and remove selection style
+            hiddenInput.value = '';
+            button.classList.remove('selected');
+            button.getElementsByTagName('i')[0].style.display = 'none'; // Hide the check icon
+        }
+    }
+handleBusButtonClick("{{ selectedBusIds}}")
+</script>

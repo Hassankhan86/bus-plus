@@ -1,0 +1,237 @@
+{% extends 'booking/base/base.html' %}
+{% load static %}
+{% block style %}
+
+
+{% endblock style %}
+
+{% block body %}
+<section class="breadcrumb-area bread-bg-7">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="breadcrumb-content">
+                        <div class="section-heading">
+                            <h2 class="sec__title text-white">My Bookings</h2>
+                        </div>
+                    </div><!-- end breadcrumb-content -->
+                </div><!-- end col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="breadcrumb-list text-right">
+                        <ul class="list-items">
+                            <li><a href="{% url 'index' %}">Home</a></li>
+                            <li>My Bookings</li>
+                        </ul>
+                    </div><!-- end breadcrumb-list -->
+                </div><!-- end col-lg-6 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+    <div class="bread-svg-box">
+        <svg class="bread-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <polygon points="100 0 50 10 0 0 0 10 100 10"></polygon>
+        </svg>
+    </div><!-- end bread-svg -->
+</section><!-- end breadcrumb-area -->
+
+<section>
+    <div class="dashboard-main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-box">
+                        <div class="form-title-wrap">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h3 class="title">Booking Results</h3>
+                                </div>
+                                <span>Total Bookings <strong class="color-text">{{orders.count}}</strong></span>
+                            </div>
+                        </div>
+                        <div class="form-content">
+                            <div class="table-form table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Trip</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Order Date</th>
+                                        <th scope="col">Payment Gateway</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in  orders%}
+                                        
+                                        <tr>
+                                            <th scope="row"><i class="la la-bus mr-1 font-size-18"></i>Trip {{order.trip}}</th>
+                                            <td>
+                                                <div class="table-content">
+                                                    <h3 class="title">{{order.order_id}}</h3>
+                                                </div>
+                                            </td>
+                                            <td>{{order.trip.get_on_trip_direction}}</td>
+                                            <td>{{order.trip.created_at}}</td>
+                                            <td>{{order.order_payments.first.payment_gateway}}</td>
+                                            <td>{{order.grand_total}}</td>
+                                         <td>
+                                                    {% if order.order_status == "Pending" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-warning">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "Rejected" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-danger">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "Completed" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-success">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "InProgress" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-warning">{{ order.order_status }}</span>
+                                                    {% elif order.order_status == "Cancelled" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-danger">{{ order.order_status }}</span>
+                                                    {% else %}
+                                                        <span class="badge-info py-1 px-2 badge bg-success">{{ order.order_status }}</span>
+                                                    {% endif %}
+                                                </td>
+
+                                            <td>
+                                                <div class="table-content">
+                                                    {% if order.need_to_pays %}
+                                                    <a class="theme-btn theme-btn-small" href="{% url 'payment'  order.id%}">Pay</a>
+
+                                                {% elif order.order_status == "Rejected" %}
+                                                        <a class="theme-btn theme-btn-small" href="{% url 'contact' %}">Contact Support</a>
+
+                                                {% elif order.order_status == "Completed"  or order.order_status == "InProgress" %}
+                                                       <a href="{% url 'my-order-id' order.id %}">
+                                                       <button class="theme-btn theme-btn-small">Review</button>
+                                                       </a>
+                                                {% elif order.order_status == "Confirmed" %}
+                                                     <a href="{% url 'my-order-id' order.id %}">
+                                                       <button class="theme-btn theme-btn-small" title="Review You order">Review</button>
+                                                       </a>
+
+
+                                                      {% if order.is_refund_applicable %}
+
+                                                        <button class="theme-btn theme-btn-small" data-bs-toggle="modal" data-bs-target="#refundModal{{ order.id }}" title="Initiate Refund">Refund</button>
+
+
+                                                      {% endif %}
+
+
+                                                {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                            <div class="modal fade black_delete_modals" id="refundModal{{ order.id }}" tabindex="-1"
+                                             aria-labelledby="refundModalLabel{{ order.id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="refundModalLabel{{ order.id }}">Initiate Refund</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Are you sure you want to initiate a refund for this order?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                            Cancel
+                                                        </button>
+                                                        <form action="initiate-refund" method="post">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                                                            <button type="submit" class="btn btn-danger">
+                                                            Initiate Refund
+                                                        </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        {% endfor %}
+                                    
+                                    
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                       <!-- List of trips -->
+                       <div class="form-content">
+                        <div class="table-form table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Bus Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">On Going Date</th>
+                                    <th class="align-middle">Return Date</th>
+                                    <th class="align-middle">Trip Type</th>
+                                    <th class="align-middle">Weight of Luggage</th>
+                                    <th class="align-middle">Trip Status</th>
+                                   <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for trip in trips %}
+                                   
+                                    
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ trip.bus.name }}</td>
+                                        <td>{{ trip.user.email }}</td>
+                                        <td>{{ trip.get_ongoing_date }}</td>
+                                        <td>{{ trip.get_return_date }}</td>
+                                        <td>{{ trip.trip_type }}</td>
+                                        <td>{{ trip.weight_of_luggage }}</td>
+
+                                    
+                                          <td>
+                                                    {% if trip.trip_status == "Pending" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-warning">{{ trip.trip_status }}</span>
+                                                    {% elif trip.trip_status == "Rejected" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-danger">{{ trip.trip_status }}</span>
+                                                    {% elif trip.trip_status == "Completed" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-success">{{ trip.trip_status }}</span>
+                                                    {% elif trip.trip_status == "InProgress" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-warning">{{ trip.trip_status }}</span>
+                                                    {% elif trip.trip_status == "Cancelled" %}
+                                                        <span class="badge-info py-1 px-2 badge bg-danger">{{ trip.trip_status }}</span>
+                                                    {% else %}
+                                                        <span class="badge-info py-1 px-2 badge bg-success">{{ trip.trip_status }}</span>
+                                                    {% endif %}
+                                                </td>
+
+                                        
+                                    </tr>
+
+
+                                    {% endfor %}
+                                
+                                
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div><!-- end form-box -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+            
+            <div class="border-top mt-5"></div>
+        </div><!-- end container-fluid -->
+    </div><!-- end dashboard-main-content -->
+</section>
+
+{% endblock body %}
+
+{% block script %}
+
+{% endblock script %}

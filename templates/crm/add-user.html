@@ -1,0 +1,105 @@
+{% extends "crm/base/base.html" %}
+
+{% load static %} 
+
+{% block style %} 
+<style>
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+
+<section class="booking-area padding-top150px padding-bottom-70px">
+  <div class="row" style="padding-top: 100px ">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        
+        <div class="card-body padding-top: 100px padding-bottom: 100px">
+            <center><h2>User Registration Form</h2></center>
+            <form action="" method="post">
+                {% csrf_token %}
+              
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email:</label>
+                  <input type="email" class="form-control" id="email" name="email" required placeholder="Enter Email">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="phone_number" class="form-label">Phone Number:</label>
+                  <input type="text" class="form-control" id="phone_number" name="phone_number" required placeholder="Enter Phone Number">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="full_name" class="form-label">Full Name:</label>
+                  <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Enter Full Name">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="first_name" class="form-label">First Name:</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="last_name" class="form-label">Last Name:</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username:</label>
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="driving_license" class="form-label">Driving License:</label>
+                  <input type="text" class="form-control" id="driving_license" name="driving_license" placeholder="Enter Driving License">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="profile" class="form-label">Profile Picture:</label>
+                  <input type="file" class="form-control" id="profile" name="profile">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name:</label>
+                  <input type="text" class="form-control" id="name" name="name" required placeholder="Enter Name">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="is_active" class="form-label">Is Active:</label>
+                  <input type="checkbox" class="form-check-input" id="is_active" name="is_active" checked>
+                </div>
+              
+                <div class="mb-3">
+                  <label for="is_staff" class="form-label">Is Staff:</label>
+                  <input type="checkbox" class="form-check-input" id="is_staff" name="is_staff">
+                </div>
+              
+                <div class="mb-3">
+                  <label for="date_joined" class="form-label">Date Joined:</label>
+                  <input type="datetime-local" class="form-control" id="date_joined" name="date_joined">
+                </div>
+              
+                <button type="submit" class="btn btn-primary">Add User</button>
+              </form>
+              
+              
+        </div>
+        <br>
+        <br>
+       
+      </div>
+    </div>
+    <div  class="col-lg-2"></div>
+  </div>
+</section>
+
+{% endblock content%} {% block scripts %} {% endblock scripts %}

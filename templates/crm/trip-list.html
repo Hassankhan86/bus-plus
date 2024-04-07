@@ -1,0 +1,416 @@
+{% extends "crm/base/base.html" %} 
+{% load static %} 
+{% block style %} 
+{% endblock style %} 
+
+{% block content %}
+
+<div class="page-content">
+  <div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="page-title-box d-sm-flex align-items-center justify-content-between"
+        >
+          <h4 class="mb-sm-0 font-size-18">Trip List</h4>
+        </div>
+      </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+      <div class="col-lg-12">
+        <form action="" method="get">
+        <div class="card">
+          <div class="card-body border-bottom">
+            <div class="d-flex align-items-center">
+              <h5 class="mb-0 card-title flex-grow-1">Trip Lists</h5>
+              <div class="flex-shrink-0">
+                
+                <a href="{% url 'trip-list' %}" class="btn btn-light"
+                  ><i class="mdi mdi-refresh"></i
+                ></a>
+                
+              </div>
+            </div>
+          </div>
+          <div class="card-body border-bottom">
+            <div class="row g-3">
+              <div class="col-xxl-4 col-lg-6">
+                <input
+                  type="search"
+                  class="form-control"
+                  id="searchInput"
+                  name="info"
+                  value="{{info}}"
+                  placeholder="Search for bus name or email"
+                />
+              </div>
+              <div class="col-xxl-2 col-lg-6">
+                <select class="form-control select2" name="status" >
+                  <option value="">Select Trip Status</option>
+                  <option value="Pending" {% if status == "Pending"  %} selected {% endif %}>Pending</option>
+                  <option value="InProgress" {% if status == "InProgress"  %} selected {% endif %}>InProgress</option>
+                  <option value="Completed" {% if status == "Completed"  %} selected {% endif %}>Conmpleted</option>
+                  <option value="Rejected" {% if status == "Rejected"  %} selected {% endif %}>Rejected</option>
+                  <option value="Cancelled" {% if status == "Cancelled"  %} selected {% endif %}>Cancelled</option>
+                </select>
+              </div>
+              <div class="col-xxl-2 col-lg-4">
+                <select class="form-control select2" name="wayInfo">
+                  <option>Select Type</option>
+                  <option value="Is Two Way" {% if wayInfo == "Is Two Way"  %} selected {% endif %}>Is Two Way</option>
+                  <option value="One Way" {% if wayInfo == "One Way"  %} selected {% endif %}>One Way</option>
+                </select>
+              </div>
+              <div class="col-xxl-2 col-lg-4">
+                <select class="form-control select2" name="filter_by_date" >
+                  <option value="">Select Date</option>
+                  <option value="today" {% if filter_by_date == "today"  %} selected {% endif %}>Today</option>
+                  <option value="week" {% if filter_by_date == "week"  %} selected {% endif %}>This week</option>
+                  <option value="month" {% if filter_by_date == "month"  %} selected {% endif %}>this Month</option>
+                  <option value="year" {% if filter_by_date == "year"  %} selected {% endif %}>This year</option>
+                  <option value="all" {% if filter_by_date == "all"  %} selected {% endif %}>All</option>
+
+                </select>
+                <!-- input-group -->
+              </div>
+              <div class="col-xxl-2 col-lg-4">
+                <button type="submit" class="btn btn-soft-secondary w-100">
+                  <i class="mdi mdi-filter-outline align-middle"></i> Filter
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle nowrap">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Bus Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">On Going Date</th>
+                    <th class="align-middle">Return Date</th>
+                    <th class="align-middle">Is Two Way</th>
+                    <th class="align-middle">Weight of Luggage</th>
+                    <th class="align-middle">Trip Status</th>
+                    <th class="align-middle">Created at</th>
+                    
+                    {% comment %} <th scope="col">Action</th> {% endcomment %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for trip in trips %}
+
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ trip.bus.name }}</td>
+                    <td>{{ trip.user.email }}</td>
+                    <td>{{ trip.on_going_date }}</td>
+                    <td>{{ trip.return_date }}</td>
+                    <td>{{ trip.is_two_way_trip }}</td>
+                    <td>
+                      <span class="badge badge-soft-success"
+                        >{{ trip.weight_of_luggage}} Kg</span
+                      >
+                    </td>
+                    <td>
+                      {% if trip.trip_status == "Pending" %}
+                      <span class="badge bg-warning">{{ trip.trip_status }}</span>
+                      {% elif trip.trip_status == "Rejected" %}
+                      <span class="badge bg-danger">{{ trip.trip_status }}</span>
+                      {% elif trip.trip_status == "Completed" %}
+                      <span class="badge bg-success">{{ trip.trip_status }}</span>
+                      {% elif trip.trip_status == "InProgress" %}
+                      <span class="badge bg-warning">{{ trip.trip_status }}</span>
+                      {% elif trip.trip_status == "Cancelled" %}
+                      <span class="badge bg-danger">{{ trip.trip_status }}</span>
+                      {% else %}
+                      <span class="badge">{{ trip.trip_status }}</span>
+                      {% endif %}
+                    </td>
+                    <td>{{ trip.created_at }}</td>
+                    {% comment %} <td>
+                      <ul class="list-unstyled hstack gap-1 mb-0">
+                        <li
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="View"
+                        >
+                          <a
+                            href="#"
+                            class="btn btn-sm btn-soft-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#busDetailsModal{{ trip.id }}"
+                            ><i class="mdi mdi-eye-outline"></i
+                          ></a>
+                        </li>
+                       <li
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                          <a
+                            href="#"
+                            class="btn btn-sm btn-soft-info"
+                            ><i class="mdi mdi-pencil-outline"></i
+                          ></a>
+                        </li>
+                        <li
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Delete"
+                        >
+                          <a
+                            href="#jobDelete"
+                            data-bs-toggle="modal"
+                            class="btn btn-sm btn-soft-danger"
+                            ><i class="mdi mdi-delete-outline"></i
+                          ></a>
+                        </li> 
+                      </ul>
+                    </td> {% endcomment %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+             <!-- Trip Details Dialogue Start -->
+
+
+             {% comment %} <div class="modal fade" id="busDetailsModal{{ trip.id }}" tabindex="-1" role="dialog" aria-labelledby="busDetailsModalLabel{{ trip.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+
+                       <div class="modal-body">
+                           {% if trip.bus.bus_images.all %}
+                           <center>
+                           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="max-height: 300px;">
+                           <!-- Indicators -->
+                           <ol class="carousel-indicators">
+                           {% for image in trip.bus.bus_images.all %}
+                          <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+                          {% endfor %}
+                          </ol>
+                         <!-- Slides -->
+                           <div class="carousel-inner" style="height: 200px;">
+                           {% for image in trip.bus.bus_images.all %}
+                           <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                              <img src="{{ image.image.url }}" class="d-block w-100" alt="Bus Image" style="height: 100%; object-fit: cover;">
+                           </div>
+                           {% endfor %}
+                           </div>
+                         <!-- Controls -->
+                           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                           <span class="visually-hidden">Previous</span>
+                           </a>
+                           <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                           <span class="visually-hidden">Next</span>
+                           </a>
+                      </div>
+
+                      {% else %}
+                            <img src="/media/{{ trip.bus.bus_logo }}" alt="bus" height="auto" width="200ppx">
+                      {% endif %}
+
+
+                      </center>
+
+                      <p>Bus Model: {{ trip.bus.bus_model }}</p>
+                      <p>Company Name: {{ trip.bus.company_name }}</p>
+                      <p>Bus Number: {{ trip.bus.bus_number }}</p>
+                      <p>Emergency Number: {{ trip.bus.bus_emergency_number }}</p>
+                      <p>Luggage Capacity: {{ trip.bus.luggage_capacity }} Kg</p>
+                      <!-- Add other bus details as needed -->
+                   </div>
+                   <div class="modal-footer">
+                      <button type="button" action="" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                   </div>
+                </div>
+               </div>
+               </div>
+                           
+                   </tbody>
+                </table>
+          </div> {% endcomment %}
+ 
+            <!-- Trip Details Dialohgue end -->
+
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto me-auto">
+                <p class="text-muted mb-0">
+                  Showing <b>{{ page_obj.start_index }}</b> to <b>{{ page_obj.end_index }}</b> of <b>{{ page_obj.paginator.count }}</b> entries
+              </p>
+              </div>
+              <div class="col-auto">
+                <div class="card d-inline-block ms-auto mb-0">
+                  <div class="card-body p-2">
+                    <nav aria-label="Page navigation example" class="mb-0">
+                      <ul class="pagination mb-0">
+                          {% if page_obj.has_previous %}
+                              <li class="page-item">
+                                  <a class="page-link" href="?page=1" aria-label="First">
+                                      <span aria-hidden="true">&laquo;</span>
+                                  </a>
+                              </li>
+                              <li class="page-item">
+                                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
+                                  </a>
+                              </li>
+                          {% else %}
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="First">
+                                      <span aria-hidden="true">&laquo;</span>
+                                  </span>
+                              </li>
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
+                                  </span>
+                              </li>
+                          {% endif %}
+
+                          {% for i in page_obj.paginator.page_range %}
+                              {% if trips.number == i %}
+                                  <li class="page-item active">
+                                      <span class="page-link">{{ i }}</span>
+                                  </li>
+                              {% else %}
+                                  <li class="page-item">
+                                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                  </li>
+                              {% endif %}
+                          {% endfor %}
+
+                          {% if trips.has_next %}
+                              <li class="page-item">
+                                  <a class="page-link" href="?page={{ trips.next_page_number }}" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </a>
+                              </li>
+                              <li class="page-item">
+                                  <a class="page-link" href="?page={{ trips.paginator.num_pages }}" aria-label="Last">
+                                      <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                              </li>
+                          {% else %}
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </span>
+                              </li>
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Last">
+                                      <span aria-hidden="true">&raquo;</span>
+                                  </span>
+                              </li>
+                          {% endif %}
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+        </div>
+      </form>
+        <!--end card-->
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!-- container-fluid -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <div
+  class="modal fade transaction-detailModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="transaction-detailModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="transaction-detailModalLabel">
+          Bus Details
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <center>
+          <img src="{% static "images/hero-bg72.jpg" %}" alt="bus" height="auto"
+          width="200ppx">
+        </center>
+
+        <div class="table-responsive">
+          <table class="table align-middle table-nowrap">
+            <tbody>
+      
+              <tr>
+                <td colspan="2">
+                  <h6 class="m-0 text-right">Bus Model:</h6>
+                </td>
+                <td></td>
+                <td>bus.bus_model</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <h6 class="m-0 text-right">Company Name:</h6>
+                </td>
+                <td></td>
+                <td>bus.company_name</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <h6 class="m-0 text-right">Bus Number:</h6>
+                </td>
+                <td></td>
+                <td>bus.bus_number</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <h6 class="m-0 text-right">Total:</h6>
+                </td>
+                <td></td>
+                <td>$ bus.tip.grand_total</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div> {% endcomment %}
+
+{% endblock content%}
+ {% block scripts %} 
+ {% endblock scripts %}

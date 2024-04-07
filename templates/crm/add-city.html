@@ -1,0 +1,122 @@
+{% extends "crm/base/base.html" %}
+
+{% load static %} 
+
+{% block style %} 
+
+{% endblock style %}
+
+{% block content %}
+
+<section class="booking-area padding-top150px padding-bottom-70px">
+  <div class="row" style="padding-top: 100px">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        
+        <div class="card-body">
+          <!-- HTML form for adding bus data -->
+          <center><h2>Add/Update City</h2></center>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                  <div>
+                 <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="card-title">Bulk Upload</h4>
+                                        <p class="card-title-desc">Please choice file and upload Cities in bulk.
+                                        </p>
+                                        <p>Template</p>
+                                         <div class="table-responsive">
+                                            <table class="table mb-0">
+
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>city</th>
+                                                        <th>lat</th>
+                                                        <th>lng</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+
+                                                        <td>Sydney</td>
+                                                        <td>-33.8678</td>
+                                                        <td>151.2100</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div>
+                                            <form action="#">
+                                                <div class="fallback">
+                                                    <input class="form-control" name="csv_file" type="file">
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Upload Cities</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+            </div>
+            </form>
+             <center><h3>OR</h3></center>
+          <form action="" method="post">
+
+            {% csrf_token %}
+
+
+            <div class="mb-3">
+              <label for="type" class="form-label">City</label>
+
+              {{ form.city }}
+              
+            </div>
+          
+            <div class="mb-3">
+              <label for="question" class="form-label">Latitude</label>
+              {{ form.latitude }}
+            </div>
+          
+            <div class="mb-3">
+              <label for="answer" class="form-label">Longitude</label>
+              {{ form.longitude }}
+            </div>
+            <div class="mb-3">
+                <label for="answer" class="form-label">Is Active</label>
+                {{ form.is_active }}
+              </div>
+          
+            <button type="submit" class="btn btn-primary">Save City</button>
+          </form>
+          
+        </div>
+       
+      </div>
+    </div>
+    <div  class="col-lg-2"></div>
+  </div>
+</section>
+    <br>
+    <br>
+    <br>
+
+{% endblock content%} 
+
+
+{% block scripts %} 
+    
+
+{% endblock scripts %}

@@ -1,0 +1,73 @@
+{% extends "crm/base/base.html" %}
+
+{% load static %} 
+
+{% block style %} 
+
+{% endblock style %}
+
+{% block content %}
+
+<section class="booking-area padding-top150px padding-bottom-70px">
+  <div class="row" style="padding-top: 100px">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        
+        <div class="card-body">
+          <!-- HTML form for adding bus data -->
+          <center><h2>Add Coupon</h2></center>
+          <form action="" method="post">
+            {% csrf_token %}
+          
+            <div class="mb-3">
+              <label for="code" class="form-label">Coupon Code:</label>
+             {{form.code}}
+            </div>
+          
+            <div class="mb-3">
+              <label for="start_date" class="form-label">Start Date:</label>
+              {{form.start_date}}
+            </div>
+          
+            <div class="mb-3">
+              <label for="end_date" class="form-label">End Date:</label>
+              {{form.end_date}}
+            </div>
+          
+          
+            <div class="mb-3">
+              <label for="minimum_amount" class="form-label">Minimum Amount:</label>
+              {{form.minimum_amount}}
+            </div>
+          
+            <div class="mb-3">
+              <label for="amount" class="form-label">Amount:</label>
+              {{form.amount}}
+            </div>
+
+            <div class="mb-3">
+              <label for="is_active" class="form-label">Is Active:</label>
+              {{form.is_active}}
+            </div>
+          
+            <div class="mb-3">
+              <label for="one_time_use_per_user" class="form-label">One-Time Use per User:</label>
+              {{form.one_time_use_per_user}}
+            </div>
+          
+            <button type="submit" class="btn btn-primary">Add Coupon</button>
+          </form>
+          
+        </div>
+       
+      </div>
+    </div>
+    <div  class="col-lg-2"></div>
+  </div>
+</section>
+<br>
+<br>
+
+{% endblock content%} {% block scripts %} {% endblock scripts %}

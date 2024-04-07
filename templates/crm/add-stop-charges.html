@@ -1,0 +1,49 @@
+{% extends "crm/base/base.html" %}
+
+{% load static %} 
+
+{% block style %} 
+
+{% endblock style %}
+
+{% block content %}
+
+<section class="booking-area padding-top150px padding-bottom-70px">
+  <div class="row" style="padding-top: 100px">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        
+        <div class="card-body">
+          <!-- HTML form for adding bus data -->
+          <center><h2>Add Stop Charges</h2></center>
+          <form action="" method="post">
+            {% csrf_token %}
+          
+            <div class="mb-3">
+              <label for="stop_title" class="form-label">Stop Title</label>
+
+              {{ form.stop_title }}
+              
+            </div>
+          
+            <div class="mb-3">
+              <label for="charge_per_minute" class="form-label">Charge Per Minut</label>
+              {{ form.charge_per_minute }}
+            </div>
+          
+           
+          
+            <button type="submit" class="btn btn-primary">Add Stop Charges</button>
+          </form>
+          
+        </div>
+       
+      </div>
+    </div>
+    <div  class="col-lg-2"></div>
+  </div>
+</section>
+
+{% endblock content%} {% block scripts %} {% endblock scripts %}

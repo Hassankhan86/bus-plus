@@ -1,0 +1,1098 @@
+{% extends 'booking/base/base.html' %}
+{% load static %}
+
+{% block title %}Buses Plus |Checkout{% endblock title %}
+{% block style %}
+<style>
+.pac-container{
+    z-index: 10000 !important;
+}
+</style>
+<style>
+    .view-icon {
+        margin-right: 5px;
+        cursor: pointer;
+    }
+</style>
+
+<style>
+    .insurance-detail {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 10px;
+        display: flex;
+    }
+
+    .left-column,
+    .right-column {
+        flex: 1;
+    }
+
+    .detail-item {
+        display: flex;
+        padding-left: 20px;
+        flex-direction: column;
+        margin-bottom: 5px;
+    }
+
+    .label {
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .value {
+        margin: 0;
+        color: #333;
+    }
+</style>
+{% endblock style %}
+
+{% block body %}
+
+<section class="breadcrumb-area bread-bg-7">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="breadcrumb-content">
+                        <div class="section-heading">
+                            <h2 class="sec__title text-white">Need aditional
+                                Booking details</h2>
+                        </div>
+                    </div><!-- end breadcrumb-content -->
+                </div><!-- end col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="breadcrumb-list text-right">
+                        <ul class="list-items">
+                            <li><a href="index.html">Booking</a></li>
+                            <li>Booking info</li>
+                        </ul>
+                    </div><!-- end breadcrumb-list -->
+                </div><!-- end col-lg-6 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+    <div class="bread-svg-box">
+        <svg class="bread-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <polygon points="100 0 50 10 0 0 0 10 100 10"></polygon>
+        </svg>
+    </div><!-- end bread-svg -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+
+<!-- ================================
+    START BOOKING AREA
+================================= -->
+<section class="booking-area padding-top-100px padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8">
+
+                <form action="/checkout/{{trip.id}}/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="trip" value{{trip.id}}>
+                    <div class="form-submit">
+                        <div class="form-box">
+                            <div class="form-title-wrap">
+                                <h3 class="title">Trip Details</h3>
+
+                            </div><!-- form-title-wrap -->
+                            <div class="form-content ">
+                                <div class="contact-form-action">
+
+                                    <div class="row">
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Passengers/Luggage</label>
+                                                <div class="form-group">
+                                                    <div class="dropdown dropdown-contain gty-container">
+                                                        <a class="dropdown-toggle dropdown-btn" href="#" role="button"
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                            <span class="adult" data-text="Adult"
+                                                                data-text-multi="Adults">0
+                                                                Adult</span>
+                                                            -
+                                                            <span class="children" data-text="Child"
+                                                                data-text-multi="Children">0
+                                                                Children</span>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-wrap">
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Adults
+                                                                        <span>from
+                                                                            15
+                                                                            years</span></label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"
+                                                                               ></i>
+                                                                        </div>
+
+                                                                         {{ form.number_adults }}
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"
+                                                                                ></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Children
+                                                                        <span>0
+                                                                            to
+                                                                            14
+                                                                            years</span></label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"
+                                                                                ></i>
+                                                                        </div>
+
+                                                                        {{ form.number_children }}
+
+
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"
+                                                                                ></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Weight
+                                                                        of
+                                                                        Luggage
+                                                                        <span>Laggage
+                                                                            in
+                                                                            Kg</span></label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"
+                                                                                ></i>
+                                                                        </div>
+
+                                                                         {{ form.weight_of_luggage }}
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"
+                                                                                ></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end dropdown -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Add
+                                                    More Stops</label>
+                                                <div class="form-group">
+                                                    <span
+                                                        class="la la-anchor                                                form-icon"></span>
+                                                    <input class="form-control" value="Add Stops" type="button"   {% if trip.trip_type == "Self-Drive" %} disabled {% endif %}
+                                                        data-toggle="modal" data-target="#addStopsPopupForm">
+                                                </div>
+                                            </div>
+                                        </div><!-- end col-lg-6 -->
+
+                                    </div>
+                                  <div class="row">
+    <div class="col-lg-4">
+        <div class="input-box">
+            <div class="custom-checkbox mb-0">
+                {{ form.is_driver_required }}
+                <label class="custom-checkbox mb-0" for="{{ form.is_driver_required.id_for_label }}">Is Driver required</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="input-box">
+            <div class="custom-checkbox mb-0">
+                {{ form.is_id_verified }}
+                <label class="custom-checkbox mb-0" for="{{ form.is_id_verified.id_for_label }}">Is ID Verified</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="input-box">
+            <div class="custom-checkbox mb-0">
+                {{ form.is_seat_belts_required }}
+                <label class="custom-checkbox mb-0" for="{{ form.is_seat_belts_required.id_for_label }}">Is Seat Belt Required</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="input-box">
+            <div class="custom-checkbox mb-0">
+                {{ form.is_insurance_required }}
+                <label class="custom-checkbox mb-0" for="{{ form.is_insurance_required.id_for_label }}">Is Insurance Required</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="input-box">
+            <div class="custom-checkbox mb-0">
+                {{ form.is_trailer_required }}
+                <label class="custom-checkbox mb-0" for="{{ form.is_trailer_required.id_for_label }}">Is Trailer Required</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="input-box">
+            <div class="custom-checkbox mb-0">
+                {{ form.is_collision_damage_required }}
+                <label class="custom-checkbox mb-0" for="{{ form.is_collision_damage_required.id_for_label }}">Is Collision Damage Required</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-lg-4 mt-2">
+        <div class="input-box">
+            <div class="form-group select-contain w-100">
+
+                <label class="custom-checkbox mb-0" for="{{ form.identity_card.id_for_label }}">{{ form.identity_card.label }}</label>
+             {{ form.identity_card }}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 license_form">
+        <div class="input-box">
+            <div class="form-group select-contain w-100">
+                <label class="custom-checkbox mb-0" for="license">License Type</label>
+                {{ license_form.license_type }}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 license_form mt-2">
+        <div class="input-box">
+            <div class="form-group select-contain w-100">
+                <label class="custom-checkbox mb-0" for="license">License File</label>
+                <input type="file" name="license" id="id_license">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-4 license_form">
+        <div class="input-box">
+            <div class="custom-checkbox mb-0">
+                {% if license_form.instance.license %}
+                <span>Current: </span>
+                <a href="/media/{{ license_form.instance.license.name }}">{{ license_form.instance.license.name }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="input-box">
+            <div class="form-group select-contain w-100">
+                <label class="form-group select-contain w-100">Trip Category</label>
+                {{ form.trip_category }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row insurance_form">
+    <div class="col-lg-12">
+        <div class="input-box">
+            <div class="form-group select-contain w-100">
+                <label class="form-group select-contain w-100"></label>
+                {{ insurance_form }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                                </div><!-- end contact-form-action -->
+                            </div><!-- end form-content -->
+                        </div><!-- end form-box -->
+
+                        <div class="form-box" id="insurancesDetail">
+                            <div class="form-title-wrap">
+                                <h3 class="title">Insurances detail</h3>
+                            </div><!-- form-title-wrap -->
+                            <div class="insurance-details-box">
+                                <!-- Insurance details will be displayed here -->
+                            </div>
+                            <br>
+                        </div><!-- end form-box -->
+
+                        <div class="form-box">
+                            <div class="form-title-wrap">
+                                <h3 class="title">Your Personal Information</h3>
+                            </div><!-- form-title-wrap -->
+                            <div class="form-content ">
+                                <div class="contact-form-action">
+
+                                    <div class="row">
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">First
+                                                    Name</label>
+                                                <div class="form-group">
+                                                    <span class="la la-user form-icon"></span>
+                                                    <input class="form-control" type="text" name="text" value="{{request.user.first_name}}"
+                                                        placeholder="First name">
+                                                </div>
+                                            </div>
+                                        </div><!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Last
+                                                    Name</label>
+                                                <div class="form-group">
+                                                    <span class="la la-user form-icon"></span>
+                                                    <input class="form-control" type="text" name="text" value="{{request.user.last_name}}"
+                                                        placeholder="Last name">
+                                                </div>
+                                            </div>
+                                        </div><!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Your
+                                                    Email</label>
+                                                <div class="form-group">
+                                                    <span class="la la-envelope-o form-icon"></span>
+                                                    <input class="form-control" type="email" name="email" value="{{request.user.email}}"
+                                                        placeholder="Email address">
+                                                </div>
+                                            </div>
+                                        </div><!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Phone
+                                                    Number</label>
+                                                <div class="form-group">
+                                                    <span class="la la-phone form-icon"></span>
+                                                    <input class="form-control" type="text" name="text" value="{{request.user.phone}}"
+                                                        placeholder="Phone Number">
+                                                </div>
+                                            </div>
+                                        </div><!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Add
+                                                    Coupon</label>
+                                                <div class="form-group">
+                                                    <span class="la la-phone form-icon"></span>
+                                                    <input class="form-control" type="text" name="text" id="coupon_code"
+                                                        placeholder="Coupon code">
+                                                </div>
+                                            </div>
+                                        </div><!-- end col-lg-6 -->
+
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Check
+                                                    Coupon availability</label>
+                                                <div class="form-group">
+
+                                                    <button type="button" class="btn btn-primary"
+                                                        onclick="check_coupon()">Check</button>
+                                                </div>
+                                            </div>
+                                        </div><!-- end col-lg-6 -->
+
+                                    </div>
+
+                                </div><!-- end contact-form-action -->
+                            </div><!-- end form-content -->
+                            <div class="container">
+                                <button type="submit" class=" form-control btn btn-primary">Confirm
+                                    Booking</button>
+                            </div>
+                            <br>
+                        </div><!-- end form-box -->
+
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-box booking-detail-form">
+                    <div class="form-title-wrap">
+                        <h3 class="title">Booking Details</h3>
+                    </div><!-- end form-title-wrap -->
+                    <div class="form-content">
+                        <div class="card-item shadow-none radius-none mb-0">
+
+                            {% if  IS_BUSES_SHOW_TO_USER or trip.trip_type == "Self-Drive" %}
+                                <div class="card-img">
+                                <a href="#" class="d-block">
+                                    <img src="/media/{{ trip.bus.bus_logo }}">
+                                </a>
+                            </div>
+                            {% endif %}
+
+                            <div class="card-body p-0">
+                            {% if  IS_BUSES_SHOW_TO_USER or trip.trip_type == "Self-Drive" %}
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3 class="card-title">{{trip.bus.name}}</h3>
+                                        <p class="card-meta">{{trip.bus.company_name}}</p>
+                                    </div>
+                                {% for charge in trip.bus.bus_charges.all %}
+                                    <div
+                                        class="align-items-center justify-content-between">
+                                        <p>
+
+                                            <span class="price__num">${{charge.per_scale_charges}}</span>
+                                            <span class="price__text">Per {{charge.scale}}</span>
+                                        </p>
+
+
+                                    </div>
+
+                                  {% endfor %}
+                                    
+                                </div>
+                                <div class="card-rating">
+                                    <span class="badge text-white">{{trip.bus.average_rating}}</span>
+
+                                </div>
+                            {% endif %}
+                                <div class="section-block"></div>
+                                <ul class="list-items list-items-2 list-items-flush py-2">
+                                {% if trip.trip_type == "Self-Drive" %}
+                                    <li class="font-size-15"><span class="w-auto d-block mb-n1"><i
+                                                class="la la-angle-right mr-1 font-size-17"></i>Self-Drive</span>
+
+                                        {% if trip.routes.first.pickup_date %}<route_date id="pickup_date_id">{{trip.routes.first.pickup_date}}</route_date> {% endif %}
+                                        {% if trip.routes.first.pickup_time %}<route_date id="pickup_time_id">{{trip.routes.first.pickup_time}}</route_date> {% endif %}
+
+                                        {% if trip.routes.last.drop_off_date %}  to <route_date id="drop_off_date_id"> {{trip.routes.last.drop_off_date}}</route_date>{% endif %}
+                                        {% if trip.routes.last.drop_off_time %} <route_date id="drop_off_time_id">{{trip.routes.last.drop_off_time}}</route_date>{% endif %}
+
+                                        </li>
+                                {% else %}
+                                    {% for route in trip.routes.all %}
+                                    <li class="font-size-15"><span class="w-auto d-block mb-n1"><i
+                                                class="la la-{{route.get_icon}} mr-1 font-size-17"></i>{{route.route_type}}</span>
+
+                                        {% if route.pickup_date %}<route_date id="pickup_date_id">{{route.pickup_date}}</route_date> {% endif %}
+                                        {% if route.pickup_time %}<route_date id="pickup_time_id">{{route.pickup_time}}</route_date> {% endif %}
+
+                                        {% if route.drop_off_date %}  to <route_date id="drop_off_date_id"> {{route.drop_off_date}}</route_date>{% endif %}
+                                        {% if route.drop_off_time %} <route_date id="drop_off_time_id">{{route.drop_off_time}}</route_date>{% endif %}
+
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+
+                                    <li class="font-size-15"><span class="w-auto d-block mb-n1"><i
+                                                class="la la-map-marker mr-1 font-size-17"></i>Location</span>{{trip.get_on_trip_direction}}
+                                    </li>
+                                </ul>
+                                <h3 class="card-title pb-3">Order Details</h3>
+                                <div class="section-block"></div>
+                             {% if trip.trip_type != "Self-Drive" %}
+                                <ul class="list-items list-items-2 py-3">
+                                    <li><span>Distance:</span><span
+                                            id="trip_total_distance">{{trip.get_trip_total_distance}}
+                                            km</span></li>
+                                    <li><span>Total Stops:</span><span id="total_stops">{{trip.get_total_stops}}</span>
+                                    </li>
+                                    <li><span>Passengers:</span><span
+                                            id="total_passengers">{{trip.get_total_passengers}}</span></li>
+
+                                </ul>
+
+                            {% else %}
+                                 <ul class="list-items list-items-2 py-3">
+                                    <li><span>Hours:</span><span
+                                            id="trip_total_distance">{{trip.get_self_drive_hours}}
+                                            </span></li>
+                                     <li><span>Per Hours:</span><span
+                                            id="charge_per_hour">{{trip.per_scale_charges}}
+                                            </span></li>
+                                    <li><span>Total Stops:</span><span id="total_stops">{{trip.get_total_stops}}</span>
+                                    </li>
+                                    <li><span>Passengers:</span><span
+                                            id="total_passengers">{{trip.get_total_passengers}}</span></li>
+
+                                </ul>
+
+                            {% endif %}
+                                <div class="section-block"></div>
+                                 {% if  IS_BUSES_SHOW_TO_USER or trip.trip_type == "Self-Drive" %}
+                                <ul class="list-items list-items-2 pt-3">
+                                    <li><span>Trip Total:</span>$<span
+                                            id="routes_price">{{trip.get_routes_price}}</span></li>
+                                    <li><span>Stops Charges:</span>$ <span
+                                            id="routes_stop_charges_price">{{trip.get_routes_stop_charges_price}}</span>
+                                    </li>
+                                    <li><span>Tax:</span>$ <span id="trip_tax">{{trip.get_trip_tax}}</span></li>
+                                    <li><span>Fee:</span>$ <span id="service_charge">{{trip.get_service_charge}}</span>
+                                    </li>
+                                    <li><span>Sub Total:</span>$ <span id="sub_total">{{trip.get_sub_total}}</span></li>
+                                </ul>
+                            {% endif %}
+                            </div>
+                        </div><!-- end card-item -->
+                    </div><!-- end form-content -->
+                </div><!-- end form-box -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end booking-area -->
+<!-- ================================
+    END BOOKING AREA
+================================= -->
+<div class="modal-popup">
+    <div class="modal fade" id="addStopsPopupForm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title title" id="exampleModalLongTitle2">Route Stops</h5>
+
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="la la-close"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="contact-form-action multi-flight-form">
+                        <div id="map" style="display: none;"></div>
+                        {% if all_stops %}
+                        {% for stop in all_stops %}
+                        <div class="contact-form-action multi-flight-field d-flex align-items-center"
+                            id="new-flight-{{forloop.counter}}">
+                            <div class="row flex-grow-1 align-items-center">
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">Route Type</label>
+
+                                        <div class="select-contain" style="height: 70px;">
+                                            <select class="select-contain-select" id="route_type" style="height:50%">
+
+                                                {% for tr in trip.routes.all %}
+                                                <option value="{{tr.route_type}}" {% if tr.route_type == stop.route_type %} selected {% endif %} > {{tr.route_type}} </option>
+                                                {% endfor %}
+
+                                                <!-- New filter: Z to A -->
+                                            </select>
+                                        </div>
+                                        <!-- end select-contain -->
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">Location</label>
+                                        <div class="form-group">
+                                            <span class="la la la-anchor
+                                form-icon"></span>
+                                            <input class="form-control location-input" value={{stop.location}}
+                                                type="text" id="location-input"
+                                                placeholder="Please Enter where you want to stop" />
+                                            <input type="hidden" class="latitude" name="stop_latitude"
+                                                value={{stop.latitude}} id="stop_latitude" />
+                                            <input type="hidden" class="longitude" name="stop_longitude"
+                                                value={{stop.longitude}} id="stop_longitude" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col-lg-3 -->
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">Number of
+                                            minutes</label>
+                                        <div class="form-group">
+                                            <span class="la la-sort-numeric-asc form-icon"></span>
+                                            <input class="form-control" value={{stop.minutes}} type="number"
+                                                id="number_of_mint" min=10 max=30 placeholder="Enter stop duration" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col-lg-3 -->
+                                <div class="col-lg-3">
+
+                                    <div class="input-box">
+                                        <label class="label-text">Break For</label>
+
+                                        <div class="select-contain" style="height: 70px;">
+                                            <select class="select-contain-select" id="break_for" style="height:50%">
+
+                                                {% for tr in stops_type %}
+                                                <option value="{{tr.id}}" {% if tr.stop_charge.id == tr.id % } selected 
+                                                { % endif %}>{{tr.stop_title}}--{{tr.charge_per_minute}}$/minute
+                                                </option>
+                                                {% endfor %}
+
+                                                <!-- New filter: Z to A -->
+                                            </select>
+                                        </div>
+                                        <!-- end select-contain -->
+
+                                    </div>
+
+                                </div>
+                                <!-- end col-lg-3 -->
+                            </div>
+                            <div class=" pt-3 pl-3">
+                                <button class="multi-flight-remove" type="button">
+                                    <span aria-hidden="true" class="la la-close"></span>
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="contact-form-action multi-flight-field d-flex align-items-center">
+                            <div class="row flex-grow-1 align-items-center">
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">Route Type</label>
+
+                                        <div class="select-contain" style="height: 70px;">
+                                            <select class="select-contain-select" id="route_type" style="height:50%">
+
+                                                {% for tr in trip.routes.all %}
+                                                <option value="{{tr.route_type}}">{{tr.route_type}}</option>
+                                                {% endfor %}
+
+                                                <!-- New filter: Z to A -->
+                                            </select>
+                                        </div>
+                                        <!-- end select-contain -->
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">Location</label>
+                                        <div class="form-group">
+                                            <span class="la la la-anchor
+                                form-icon"></span>
+                                            <input class="form-control location-input" type="text" id="location-input"
+                                                placeholder="Please Enter where you want to stop" />
+                                            <input type="hidden" class="latitude" name="stop_latitude"
+                                                id="stop_latitude" />
+                                            <input type="hidden" class="longitude" name="stop_longitude"
+                                                id="stop_longitude" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col-lg-3 -->
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">Number of
+                                            minutes</label>
+                                        <div class="form-group">
+                                            <span class="la la-sort-numeric-asc form-icon"></span>
+                                            <input class="form-control" type="number" id="number_of_mint" min=10 max=30
+                                                placeholder="Enter stop duration" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col-lg-3 -->
+                                <div class="col-lg-3">
+
+                                    <div class="input-box">
+                                        <label class="label-text">Break For</label>
+
+                                        <div class="select-contain" style="height: 70px;">
+                                            <select class="select-contain-select" id="break_for" style="height:50%">
+
+                                                {% for tr in stops_type %}
+                                                <option value="{{tr.id}}">
+                                                    {{tr.stop_title}}--{{tr.charge_per_minute}}$/minute
+                                                </option>
+                                                {% endfor %}
+
+                                                <!-- New filter: Z to A -->
+                                            </select>
+                                        </div>
+                                        <!-- end select-contain -->
+
+                                    </div>
+
+                                </div>
+                                <!-- end col-lg-3 -->
+                            </div>
+                            <div class=" pt-3 pl-3">
+                                <button class="multi-flight-remove" type="button">
+                                    <span aria-hidden="true" class="la la-close"></span>
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div><!-- end contact-form-action -->
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 pr-0">
+                            <div class="form-group">
+                                <button class="theme-btn add-flight-btn margin-top-40px w-100" type="button">
+                                    <i class="la la-plus mr-1"></i>Add another
+                                    Stop
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 pr-0">
+                            <div class="form-group">
+                                <button class="theme-btn save-flight-btn margin-top-40px w-100" type="button"
+                                    onclick="save_stop_details()">
+                                    <i class="la la-save mr-1"></i>Save
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="insuranceModal" tabindex="-1" aria-labelledby="insuranceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="insuranceModalLabel">Insurance
+                    Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="insuranceDescription"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Show modal when the view icon is clicked
+        $("#insurance-select option").click(function () {
+            var description = $(this).data("description");
+            if (description) {
+                $("#insuranceDescription").text(description);
+                $("#insuranceModal").modal("show");
+            }
+        });
+    });
+</script>
+<script>
+
+$('#id_is_driver_required').change(function() {
+     var licenseInput = $('#id_license_type');
+    if (!this.checked) {
+
+$(".license_form").show()
+         licenseInput.prop('required', true);
+
+    } else {
+        $(".license_form").hide();
+                    licenseInput.prop('required', false);
+
+    }
+});
+
+
+$("#id_is_insurance_required").change(function() {
+    var licenseInput = $('#id_insurance');
+
+    if (this.checked) {
+
+$(".insurance_form").show()
+         licenseInput.prop('required', true);
+    } else {
+        $(".insurance_form").hide();
+            licenseInput.prop('required', false);
+    }
+});
+ $('#id_is_driver_required').trigger('change');
+ $('#id_is_insurance_required').trigger('change');
+
+    var map;
+    var on_going_bounds;
+    var return_bounds;
+    function loadGoogleMapsApi() {
+        var googleMapsApiScript = document.createElement("script");
+        googleMapsApiScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAMNjToUwKuLdmBpyAXlRiaCE--7OkT8hM&libraries=geometry,places&callback=initAutocomplete";
+        document.head.appendChild(googleMapsApiScript);
+    }
+    // Initialize the Autocomplete for each location input field
+    function setupAutocomplete(input, mapOptions, routeType) {
+        var autocomplete = new google.maps.places.Autocomplete(input, mapOptions);
+        autocomplete.addListener("place_changed", function () {
+            var place = autocomplete.getPlace();
+
+            // Determine the appropriate bounds based on the route type
+            var bounds = routeType === "on_going" ? on_going_bounds : return_bounds;
+
+            // Validate if the selected place is within the bounds
+            if (!place.geometry || !bounds.contains(place.geometry.location)) {
+                // Show an error message or take appropriate action
+                Notifications("Invalid place selected. Please select a place within the pickup and destination area.", "error");
+
+                return;
+            }
+
+            bounds.extend(place.geometry.location);
+
+            input.nextElementSibling.value = place.geometry.location.lat();
+            input.nextElementSibling.nextElementSibling.value = place.geometry.location.lng();
+        });
+
+    }
+
+    function initAutocomplete() {
+        var locationInputs = document.getElementsByClassName('location-input');
+        on_going_bounds = new google.maps.LatLngBounds();
+        return_bounds = new google.maps.LatLngBounds();
+
+        var pickupLocation = new google.maps.LatLng({{ trip.routes.first.departure_latitude }},{{ trip.routes.first.departure_longitude }});
+        var destinationLocation = new google.maps.LatLng({{ trip.routes.first.destination_latitude }},{{ trip.routes.first.destination_longitude }});
+
+        // Extend the bounds with pickup and destination locations for both route types
+        on_going_bounds.extend(pickupLocation);
+        return_bounds.extend(pickupLocation);
+        on_going_bounds.extend(destinationLocation);
+        return_bounds.extend(destinationLocation);
+
+
+         var mapOptions = {
+                componentRestrictions: { country: "au" }, // Restrict results to cities in Australia
+              };
+
+        for (var i = 0; i < locationInputs.length; i++) {
+            // Get the selected route type (ongoing or return) based on the radio button
+            var routeType = document.getElementById("route_type").value;
+            setupAutocomplete(locationInputs[i], mapOptions, routeType);
+        }
+
+        // Create the map instance
+        if (!map) {
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        }
+
+        // Set the map bounds to include pickup, destination, and user-selected locations for both route types
+        map.fitBounds(on_going_bounds);
+        map.fitBounds(return_bounds);
+    }
+
+
+    // Load the Google Maps API
+    loadGoogleMapsApi();
+
+
+    function update_passengers() {
+        var adults = parseInt($('input[name="number_adults"]').val());
+        var child_number = parseInt($('input[name="number_children"]').val());
+
+        var html = adults;
+        if (typeof adults == 'number') {
+            if (adults < 2) {
+                html = adults + ' ' + $('.adult').data('text');
+            } else {
+                html = adults + ' ' + $('.adult').data('text-multi');
+            }
+        }
+        $('.adult').html(html);
+
+        var html = child_number;
+        if (typeof child_number == 'number') {
+            if (child_number < 2) {
+                html = child_number + ' ' + $('.children').data('text');
+            } else {
+                html = child_number + ' ' + $('.children').data('text-multi');
+            }
+        }
+        $('.children').html(html);
+
+
+        var adult_number = $('#id_number_adults').val();
+        var child_number = $('#id_number_children').val();
+        $("#total_passengers").text(parseInt(adult_number) + parseInt(child_number));
+    }
+    function save_stop_details() {
+        var formDataList = [];
+        var isValid = true;
+        // Loop through all the flight fields to gather their input values
+        $('.multi-flight-field').each(function () {
+
+            var routeType = $(this).find('#route_type').val();
+            var location = $(this).find('#location-input').val();
+            var numOfMinutes = $(this).find('#number_of_mint').val();
+            var breakFor = $(this).find('#break_for').val();
+            var latitude = $(this).find('#stop_latitude').val();
+            var longitude = $(this).find('#stop_longitude').val();
+
+
+            if (!routeType || !location || !numOfMinutes || !breakFor) {
+                isValid = false;
+                return false; // Break the loop
+            }
+            // Create an object containing the input values
+            var formData = {
+                routeType: routeType,
+                location: location,
+                numOfMinutes: numOfMinutes,
+                breakFor: breakFor,
+                latitude: latitude,
+                longitude: longitude
+            };
+
+            formDataList.push(formData);
+
+        });
+
+        if (!isValid) {
+            Notifications("Please Enter a valid input values", "error");
+            return;
+        }
+        data = { "stops": formDataList, "trip": "{{trip.id}}", "csrfmiddlewaretoken": '{{ csrf_token }}', }
+        // Send an AJAX request with the formDataList
+        $.ajax({
+            url: '/api/add-stops',
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (response) {
+
+                $("#trip_total_distance").text(response.trip_total_distance + " km");
+                $("#total_stops").text(response.total_stops);
+                $("#total_passengers").text(response.total_passengers);
+                {% if  IS_BUSES_SHOW_TO_USER %}
+                $("#routes_price").text(response.routes_price);
+                $("#routes_stop_charges_price").text(response.routes_stop_charges_price);
+                $("#trip_tax").text(response.trip_tax);
+                $("#service_charge").text(response.service_charge);
+                $("#sub_total").text(response.sub_total);
+                {% endif %}
+                var route = response.routes[0]
+
+                $("#pickup_date_id").text(route.pickup_date);
+                $("#pickup_time_id").text(route.pickup_time);
+                $("#drop_off_date_id").text(route.drop_off_date);
+                $("#drop_off_time_id").text(route.drop_off_time);
+
+                Notifications("Trip Stops information is saved", "success");
+
+                $("[data-dismiss=modal]").trigger({ type: "click" });
+
+            },
+            error: function (xhr, status, error) {
+                // Handle the error here (if needed)
+                Notifications("Something went wrong", "error");
+            }
+        });
+    };
+    function check_coupon() {
+        var coupon_code = $('#coupon_code').val();
+        if (!coupon_code) {
+            Notifications("Coupon code is required", "error");
+            return
+        }
+        $.ajax({
+            type: "POST",
+            url: "/api/check-coupon",
+            dataType: "json",
+            data: { "trip": "{{trip.id}}", "coupon": coupon_code, "csrfmiddlewaretoken": '{{ csrf_token }}', },
+            success: function (data) {
+                console.log(data);
+
+                if (data.status == 200) {
+                    Notifications(data["message"], "success")
+                }
+                else {
+                    Notifications(data["message"], "error")
+                }
+                return data;
+            },
+            error: function (xhr, status, error) {
+
+                Notifications(xhr.responseJSON.message, "error");
+            }
+        });
+    }
+    update_passengers()
+</script>
+
+{% endblock body %}
+{% block script %}
+{#if  any js problem then uncomment  this lib after this notification will not work#}
+{#<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>#}
+<script>
+
+ $('#insurancesDetail').hide();
+    $(document).ready(function () {
+        $('.insurances').on('change', function () {
+          manage_insurances()
+        });
+    });
+
+    function manage_insurances()
+    {
+          var selectedOptions = $('.insurances option:selected');
+            var detailsBox = $('.insurance-details-box');
+            detailsBox.empty(); // Clear previous details
+
+            // Show details of each selected insurance
+            selectedOptions.each(function () {
+                var insuranceId = $(this).val();
+                console.log(insuranceId);
+                var insuranceDescription = $(this).data('description');
+                console.log(insuranceDescription);
+
+
+                $.ajax({
+                    url: '/api/get_insurances/' + insuranceId,
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {},
+                    success: function (data) {
+                        console.log(data);
+                        var detailElement = $('<div class="insurance-detail"></div>');
+                        var leftColumn = $('<div class="left-column"></div>');
+                        leftColumn.append('<div class="detail-item"><p class="label">Name:</p><p class="value">' + data.name + '</p></div>');
+                        leftColumn.append('<div class="detail-item"><p class="label">Coverage Amount:</p><p class="value">$' + data.coverage_amount + '</p></div>');
+                        leftColumn.append('<div class="detail-item"><p class="label">Premium:</p><p class="value">$' + data.premium + '</p></div>');
+                        detailElement.append(leftColumn);
+
+                        // Right column for Description
+                        var rightColumn = $('<div class="right-column"></div>');
+                        rightColumn.append('<div class="detail-item"><p class="label">Description:</p><p class="value">' + data.description + '</p></div>');
+                        detailElement.append(rightColumn);
+                        detailsBox.append(detailElement);
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching insurance details:', error);
+                    }
+                });
+            });
+
+            // Show/hide the form box based on the number of selected insurances
+            var isAnyInsuranceSelected = selectedOptions.length > 0;
+            $('#insurancesDetail').toggle(isAnyInsuranceSelected);
+    }
+</script>
+
+{% endblock script %}
